@@ -414,31 +414,34 @@ exclude:
       this.log('章ディレクトリが見つかりません', 'warning');
     }
 
-    // Process appendices
-    const appendicesPath = path.join(srcDir, 'appendices');
-    try {
-      const appendices = await fs.readdir(appendicesPath, { withFileTypes: true });
-      const sortedAppendices = appendices
-        .filter(d => d.isDirectory())
-        .sort((a, b) => a.name.localeCompare(b.name));
+    // Process appendices (only if enabled)
+    const appendicesSection = this.config.contentSections.find(s => s.name === 'appendices');
+    if (appendicesSection && appendicesSection.enabled) {
+      const appendicesPath = path.join(srcDir, 'appendices');
+      try {
+        const appendices = await fs.readdir(appendicesPath, { withFileTypes: true });
+        const sortedAppendices = appendices
+          .filter(d => d.isDirectory())
+          .sort((a, b) => a.name.localeCompare(b.name));
 
-      for (const appendix of sortedAppendices) {
-        const indexPath = path.join(appendicesPath, appendix.name, 'index.md');
-        try {
-          const content = await fs.readFile(indexPath, 'utf-8');
-          const titleMatch = content.match(/^#\s+(.+)$/m);
-          const title = titleMatch ? titleMatch[1] : `付録${appendix.name.replace('appendix-', '').toUpperCase()}`;
-          
-          navigationData.appendices.push({
-            title: title,
-            path: `/appendices/${appendix.name}/`
-          });
-        } catch {
-          // Skip if index.md doesn't exist
+        for (const appendix of sortedAppendices) {
+          const indexPath = path.join(appendicesPath, appendix.name, 'index.md');
+          try {
+            const content = await fs.readFile(indexPath, 'utf-8');
+            const titleMatch = content.match(/^#\s+(.+)$/m);
+            const title = titleMatch ? titleMatch[1] : `付録${appendix.name.replace('appendix-', '').toUpperCase()}`;
+            
+            navigationData.appendices.push({
+              title: title,
+              path: `/appendices/${appendix.name}/`
+            });
+          } catch {
+            // Skip if index.md doesn't exist
+          }
         }
+      } catch {
+        this.log('付録ディレクトリが見つかりません', 'warning');
       }
-    } catch {
-      this.log('付録ディレクトリが見つかりません', 'warning');
     }
 
     // Write navigation data

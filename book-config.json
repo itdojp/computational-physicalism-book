@@ -45,7 +45,7 @@
       "name": "appendices",
       "title": "付録",
       "directory": "appendices",
-      "enabled": true,
+      "enabled": false,
       "order": 4,
       "numbering": true,
       "numberingPrefix": "付録"
