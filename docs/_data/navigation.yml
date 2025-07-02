@@ -8,13 +8,9 @@ chapters:
     path: "/chapters/chapter03/"
   - title: "計算論的物理主義 第4回：実装への具体的アプローチ"
     path: "/chapters/chapter04/"
-  - title: "第12章：倫理的・社会的含意"
-    path: "/chapters/chapter12/"
+  - title: "第5章：倫理的・社会的含意"
+    path: "/chapters/chapter05/"
 
 appendices:
-  - title: "付録A: 設定リファレンス"
-    path: "/appendices/appendix-a/"
   - title: "『計算物理主義入門』用語集・表記統一ガイド"
     path: "/appendices/appendix01/"
-  - title: "付録B: プログラミング言語比較"
-    path: "/appendices/appendix02/"
