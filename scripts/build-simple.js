@@ -379,9 +379,30 @@ exclude:
 
   async generateNavigationData(srcDir, publicDir) {
     const navigationData = {
+      introduction: [],
       chapters: [],
-      appendices: []
+      appendices: [],
+      afterword: []
     };
+
+    // Process introduction (only if enabled)
+    const introductionSection = this.config.contentSections.find(s => s.name === 'introduction');
+    if (introductionSection && introductionSection.enabled) {
+      const introductionPath = path.join(srcDir, 'introduction');
+      try {
+        const indexPath = path.join(introductionPath, 'index.md');
+        const content = await fs.readFile(indexPath, 'utf-8');
+        const titleMatch = content.match(/^#\s+(.+)$/m);
+        const title = titleMatch ? titleMatch[1] : 'はじめに';
+        
+        navigationData.introduction.push({
+          title: title,
+          path: '/introduction/'
+        });
+      } catch {
+        this.log('はじめにのindex.mdが見つかりません', 'warning');
+      }
+    }
 
     // Process chapters
     const chaptersPath = path.join(srcDir, 'chapters');
@@ -444,12 +465,35 @@ exclude:
       }
     }
 
+    // Process afterword (only if enabled)
+    const afterwordSection = this.config.contentSections.find(s => s.name === 'afterword');
+    if (afterwordSection && afterwordSection.enabled) {
+      const afterwordPath = path.join(srcDir, 'afterword');
+      try {
+        const indexPath = path.join(afterwordPath, 'index.md');
+        const content = await fs.readFile(indexPath, 'utf-8');
+        const titleMatch = content.match(/^#\s+(.+)$/m);
+        const title = titleMatch ? titleMatch[1] : 'あとがき';
+        
+        navigationData.afterword.push({
+          title: title,
+          path: '/afterword/'
+        });
+      } catch {
+        this.log('あとがきのindex.mdが見つかりません', 'warning');
+      }
+    }
+
     // Write navigation data
     const dataDir = path.join(publicDir, '_data');
     await fs.mkdir(dataDir, { recursive: true });
     await fs.writeFile(
       path.join(dataDir, 'navigation.yml'),
       `# Auto-generated navigation data
+introduction:
+${navigationData.introduction.map(intro => `  - title: "${intro.title}"
+    path: "${intro.path}"`).join('\n')}
+
 chapters:
 ${navigationData.chapters.map(ch => `  - title: "${ch.title}"
     path: "${ch.path}"`).join('\n')}
@@ -457,6 +501,10 @@ ${navigationData.chapters.map(ch => `  - title: "${ch.title}"
 appendices:
 ${navigationData.appendices.map(ap => `  - title: "${ap.title}"
     path: "${ap.path}"`).join('\n')}
+
+afterword:
+${navigationData.afterword.map(after => `  - title: "${after.title}"
+    path: "${after.path}"`).join('\n')}
 `
     );
     

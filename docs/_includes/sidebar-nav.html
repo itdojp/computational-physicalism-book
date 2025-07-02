@@ -77,6 +77,24 @@
         </ul>
     </div>
     {% endif %}
+
+    <!-- Afterword -->
+    {% if site.data.navigation.afterword %}
+    <div class="nav-section">
+        <h3 class="nav-section-title">あとがき</h3>
+        <ul class="nav-list">
+            {% for afterword in site.data.navigation.afterword %}
+            <li class="nav-item">
+                <a href="{{ site.baseurl }}{{ afterword.path }}" 
+                   class="nav-link{% if page.url contains afterword.path %} active{% endif %}"
+                   aria-current="{% if page.url contains afterword.path %}page{% endif %}">
+                    {{ afterword.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 </div>
 
 <!-- Progress Indicator -->
