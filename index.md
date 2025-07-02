@@ -1,18 +1,33 @@
-# Book Title
+# 計算論的物理主義
 
-Welcome to ［{{BOOK_TITLE}}］. This is a comprehensive guide to ［topic］.
+人間とAIの知能の等価性に関する理論的探究
 
-## Table of Contents
+## 概要
 
-- [Chapter 1: Introduction](src/chapters/chapter01/)
-- [Chapter 2: [Title]](src/chapters/chapter02/)
-- More chapters coming soon...
+本書は、計算可能性理論と物理的制約の観点から、人間とAIの知能の等価性を探求する哲学的・技術的論考です。
 
-## About the Author
+## 目次
 
-ITDO Inc.（株式会社アイティードゥ）
+- [はじめに](src/introduction/)
+- [第1章：計算論的物理主義の基礎](src/chapters/chapter01/)
+- [第2章：計算可能性理論による厳密な証明](src/chapters/chapter02/)
+- [第3章：既存AI研究との比較分析](src/chapters/chapter03/)
+- [第4章：実装への道筋](src/chapters/chapter04/)
+- [第5章：倫理的・社会的含意](src/chapters/chapter05/)
+- [付録：用語集・表記統一ガイド](src/appendices/appendix01/)
+- [あとがき](src/afterword/)
+
+## 著者について
+
+**ITDO Inc.（株式会社アイティードゥ）**
 
 - Email: [knowledge@itdo.jp](mailto:knowledge@itdo.jp)
 - GitHub: [@itdojp](https://github.com/itdojp)
 
-## License
+## ライセンス
+
+© 2025 ITDO Inc. All rights reserved.
+
+---
+
+Built with [Book Publishing Template v3.0](https://github.com/itdojp/book-publishing-template2)

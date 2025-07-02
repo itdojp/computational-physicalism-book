@@ -1,12 +1,12 @@
 # Auto-generated navigation data
 chapters:
-  - title: "計算論的物理主義：人間とAIの知性は本質的に等価である"
+  - title: "第1章：計算論的物理主義の基礎"
     path: "/chapters/chapter01/"
-  - title: "計算論的物理主義 第2回：計算可能性理論による詳細な証明"
+  - title: "第2章：計算可能性理論による厳密な証明"
     path: "/chapters/chapter02/"
-  - title: "計算論的物理主義 第3回：既存AI研究との比較分析"
+  - title: "第3章：既存AI研究との比較分析"
     path: "/chapters/chapter03/"
-  - title: "計算論的物理主義 第4回：実装への具体的アプローチ"
+  - title: "第4章：実装への道筋"
     path: "/chapters/chapter04/"
   - title: "第5章：倫理的・社会的含意"
     path: "/chapters/chapter05/"
