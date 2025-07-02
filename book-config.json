@@ -1,0 +1,181 @@
+{
+  "book": {
+    "title": "計算論的物理主義",
+    "subtitle": "人間とAIの知能の等価性に関する理論的探究",
+    "description": "計算可能性理論と物理的制約の観点から、人間とAIの知能の等価性を探求する哲学的・技術的論考",
+    "author": {
+      "name": "ITDO Inc.",
+      "email": "knowledge@itdo.jp",
+      "github": "itdojp"
+    },
+    "repository": {
+      "url": "https://github.com/itdojp/computational-physicalism-book",
+      "zenn": "https://zenn.dev/itdojp/books/computational-physicalism"
+    }
+  },
+  "deployment": {
+    "sourceFolder": "docs",
+    "siteUrl": "https://itdojp.github.io/computational-physicalism-book/"
+  },
+  "contentSections": [
+    {
+      "name": "introduction",
+      "title": "はじめに",
+      "directory": "introduction",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "name": "chapters",
+      "title": "本章",
+      "directory": "chapters",
+      "enabled": true,
+      "order": 2,
+      "numbering": true
+    },
+    {
+      "name": "tutorials",
+      "title": "チュートリアル",
+      "directory": "tutorials",
+      "enabled": false,
+      "order": 3,
+      "numbering": true
+    },
+    {
+      "name": "appendices",
+      "title": "付録",
+      "directory": "appendices",
+      "enabled": true,
+      "order": 4,
+      "numbering": true,
+      "numberingPrefix": "付録"
+    },
+    {
+      "name": "exercises",
+      "title": "練習問題",
+      "directory": "exercises",
+      "enabled": false,
+      "order": 5
+    },
+    {
+      "name": "afterword",
+      "title": "あとがき",
+      "directory": "afterword",
+      "enabled": true,
+      "order": 6
+    }
+  ],
+  "tableOfContents": {
+    "enabled": true,
+    "outputFile": "table-of-contents.md",
+    "title": "目次",
+    "maxDepth": 3,
+    "includeNumbers": true,
+    "autoLink": true,
+    "autoNumberChapters": true,
+    "detectExistingNumbers": true
+  },
+  "excludePatterns": [
+    "draft.md",
+    "notes.md",
+    "solutions.md",
+    "instructor.md",
+    "private.md",
+    "confidential.md",
+    "secret.md",
+    "private-to-public-deployment-guide.md",
+    "*.tmp",
+    "*.backup",
+    "*.bak",
+    ".private",
+    ".confidential"
+  ],
+  "contentExcludePatterns": [
+    "<!-- TODO:",
+    "<!-- FIXME:",
+    "<!-- PRIVATE:",
+    "<!-- SECRET:",
+    "<!-- DRAFT:",
+    "<!-- CONFIDENTIAL:",
+    "<!-- INSTRUCTOR:",
+    "<!-- INTERNAL:",
+    "<!-- SENSITIVE:"
+  ],
+  "sensitivePatterns": [
+    "(api[_-]?key|secret[_-]?key|access[_-]?token|auth[_-]?token)\\s*[=:]\\s*['\"][a-zA-Z0-9_-]{8,}['\"]",
+    "(password|passwd)\\s*[=:]\\s*['\"][^'\"\\s]{8,}['\"]",
+    "github[_-]?token\\s*[=:]\\s*['\"]ghp_[a-zA-Z0-9]{36}['\"]",
+    "aws[_-]?access[_-]?key[_-]?id\\s*[=:]\\s*['\"]AKIA[0-9A-Z]{16}['\"]",
+    "-----BEGIN [A-Z ]+PRIVATE KEY-----",
+    "(email|mail)\\s*[=:]\\s*['\"][a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}['\"]"
+  ],
+  "publicFiles": [
+    "index.md",
+    "README.md",
+    "setup-guide.md"
+  ],
+  "hotReload": {
+    "enabled": true,
+    "port": 8080,
+    "wsPort": 8081,
+    "debounceDelay": 100,
+    "watchPaths": [
+      "src",
+      "_layouts",
+      "_config.yml",
+      "index.md",
+      "README.md",
+      "assets"
+    ],
+    "ignorePatterns": [
+      "**/node_modules/**",
+      "**/public/**",
+      "**/.git/**",
+      "**/.build-meta.json"
+    ]
+  },
+  "imageOptimization": {
+    "enabled": true,
+    "quality": 85,
+    "formats": ["webp", "original"],
+    "maxWidth": 1920,
+    "stripMetadata": true,
+    "lazyLoad": true
+  },
+  "versionManagement": {
+    "enabled": true,
+    "autoCreateTags": true,
+    "autoGenerateReleaseNotes": true,
+    "semanticVersioning": true,
+    "releaseNotesInPublic": true,
+    "versionInFooter": true
+  },
+  "pdf": {
+    "engine": "pandoc",
+    "paperSize": "A4",
+    "margin": "2cm",
+    "fontSize": "11pt",
+    "fontFamily": "DejaVu Sans",
+    "includeTableOfContents": true,
+    "includeCoverPage": true
+  },
+  "epub": {
+    "engine": "pandoc",
+    "coverImage": null,
+    "includeTableOfContents": true,
+    "chapterLevel": 1,
+    "language": "ja",
+    "publisher": "株式会社アイティードゥ",
+    "rights": "© 2025 ITDO Inc. All rights reserved."
+  },
+  "build": {
+    "outputDirectory": "docs",
+    "enableV3DesignSystem": true,
+    "enableNavigation": true,
+    "enableSyntaxHighlighting": true,
+    "enableSearchIndex": false,
+    "enablePWA": false,
+    "minifyCSS": false,
+    "minifyJS": false
+  }
+}
