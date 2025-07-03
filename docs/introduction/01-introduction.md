@@ -5,9 +5,6 @@ title: "はじめに"
 
 # はじめに
 
-{% include navigation.html %}
-
-
 この書籍は、Book Publishing Template v2.0のテストサンプルです。
 
 ## 本書の目的
@@ -27,5 +24,3 @@ title: "はじめに"
 ## 次の章へ
 
 [第1章: 基本機能](../chapters/01-basic-features.md)に進みましょう。
-
-{% include navigation.html %}

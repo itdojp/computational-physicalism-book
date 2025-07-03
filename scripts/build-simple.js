@@ -623,6 +623,7 @@ ${navigationData.afterword.map(after => `  - title: "${after.title}"
     const chaptersDir = path.join(publicDir, 'chapters');
     const appendicesDir = path.join(publicDir, 'appendices');
     const introDir = path.join(publicDir, 'introduction');
+    const afterwordDir = path.join(publicDir, 'afterword');
     
     try {
       await addNavigation(chaptersDir);
@@ -636,11 +637,19 @@ ${navigationData.afterword.map(after => `  - title: "${after.title}"
       // Appendices directory doesn't exist
     }
     
-    try {
-      await addNavigation(introDir);
-    } catch {
-      // Introduction directory doesn't exist
-    }
+    // Skip introduction directory to avoid duplicate navigation
+    // try {
+    //   await addNavigation(introDir);
+    // } catch {
+    //   // Introduction directory doesn't exist
+    // }
+    
+    // Skip afterword directory to avoid duplicate navigation
+    // try {
+    //   await addNavigation(afterwordDir);
+    // } catch {
+    //   // Afterword directory doesn't exist
+    // }
     
     this.log('Markdownファイルにナビゲーションを追加しました');
   }
