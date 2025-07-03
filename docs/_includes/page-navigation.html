@@ -39,7 +39,11 @@
 {% assign current_index = nil %}
 
 {% for item in all_pages %}
-    {% if page.url contains item.path %}
+    <!-- Normalize URLs for comparison -->
+    {% assign normalized_item_path = item.path | remove_first: "/" | append: "/" %}
+    {% assign normalized_page_url = page.url | remove_first: "/" | append: "/" %}
+    
+    {% if normalized_page_url == normalized_item_path %}
         {% assign current_index = forloop.index0 %}
         {% break %}
     {% endif %}
