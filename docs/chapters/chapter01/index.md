@@ -1,6 +1,5 @@
 ---
 layout: book
-order: 3
 title: "第1章：計算論的物理主義の基礎"
 ---
 

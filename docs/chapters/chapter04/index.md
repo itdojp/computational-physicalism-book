@@ -1,6 +1,5 @@
 ---
 layout: book
-order: 6
 title: "第4章：実装への道筋"
 ---
 

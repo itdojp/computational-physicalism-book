@@ -1,6 +1,5 @@
 ---
 layout: book
-order: 5
 title: "第3章：既存AI研究との比較分析"
 ---
 

@@ -1,6 +1,5 @@
 ---
 layout: book
-order: 7
 title: "第5章：倫理的・社会的含意"
 ---
 

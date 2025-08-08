@@ -1,6 +1,5 @@
 ---
 layout: book
-order: 4
 title: "第2章：計算可能性理論による厳密な証明"
 ---
 
