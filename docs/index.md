@@ -1,3 +1,13 @@
+---
+layout: book
+title: "計算論的物理主義"
+description: "人間とAIの知能の等価性に関する理論的探究"
+author: "株式会社アイティードゥ"
+version: "1.0.0"
+order: 1
+permalink: /
+---
+
 # 計算論的物理主義
 
 人間とAIの知能の等価性に関する理論的探究
