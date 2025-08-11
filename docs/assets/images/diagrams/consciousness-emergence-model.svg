@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <title>意識創発モデル</title>
+  <desc>計算プロセスから意識が創発する階層モデル</desc>
+  
+  <defs>
+    <style>
+      :root {
+        --svg-bg: #ffffff;
+        --svg-text: #1a1a1a;
+        --svg-primary: #0066cc;
+        --svg-secondary: #6b7280;
+        --svg-accent: #10b981;
+        --svg-warning: #f59e0b;
+        --svg-error: #ef4444;
+      }
+      
+      .title-text {
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        fill: var(--svg-text);
+      }
+      
+      .layer-title {
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        fill: white;
+      }
+      
+      .label-text {
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 400;
+        fill: var(--svg-text);
+      }
+      
+      .small-text {
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 10px;
+        font-weight: 400;
+        fill: var(--svg-secondary);
+      }
+      
+      .emergence-arrow {
+        stroke: var(--svg-accent);
+        stroke-width: 2;
+        fill: none;
+        stroke-dasharray: 5,3;
+        marker-end: url(#emergence-arrow);
+      }
+      
+      .feedback-loop {
+        stroke: var(--svg-warning);
+        stroke-width: 1.5;
+        fill: none;
+        stroke-dasharray: 3,2;
+      }
+    </style>
+    
+    <marker id="emergence-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="var(--svg-accent)"/>
+    </marker>
+    
+    <linearGradient id="consciousness-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="quantum-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0066cc;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="30" class="title-text" text-anchor="middle">意識創発モデル：計算から現象的意識へ</text>
+  
+  <!-- Level 0: Quantum/Physical -->
+  <rect x="100" y="500" width="600" height="70" fill="url(#quantum-gradient)" stroke="var(--svg-primary)" stroke-width="2" rx="8"/>
+  <text x="400" y="520" class="layer-title" text-anchor="middle">量子/物理層</text>
+  <text x="200" y="540" class="label-text">量子コヒーレンス</text>
+  <text x="400" y="540" class="label-text">微小管振動</text>
+  <text x="600" y="540" class="label-text">量子もつれ</text>
+  <text x="200" y="555" class="small-text">10⁻¹³秒スケール</text>
+  <text x="400" y="555" class="small-text">Penrose-Hameroff理論</text>
+  <text x="600" y="555" class="small-text">非局所相関</text>
+  
+  <!-- Level 1: Neural Activity -->
+  <rect x="120" y="410" width="560" height="70" fill="#e0f2fe" stroke="var(--svg-primary)" stroke-width="2" rx="8"/>
+  <text x="400" y="430" class="layer-title" text-anchor="middle" fill="var(--svg-text)">神経活動層</text>
+  <text x="220" y="450" class="label-text">ニューロン発火</text>
+  <text x="400" y="450" class="label-text">シナプス伝達</text>
+  <text x="580" y="450" class="label-text">神経振動</text>
+  <text x="220" y="465" class="small-text">活動電位</text>
+  <text x="400" y="465" class="small-text">神経伝達物質</text>
+  <text x="580" y="465" class="small-text">α波、γ波</text>
+  
+  <!-- Level 2: Information Processing -->
+  <rect x="140" y="320" width="520" height="70" fill="#f0fdf4" stroke="var(--svg-accent)" stroke-width="2" rx="8"/>
+  <text x="400" y="340" class="layer-title" text-anchor="middle" fill="var(--svg-text)">情報処理層</text>
+  <text x="240" y="360" class="label-text">パターン認識</text>
+  <text x="400" y="360" class="label-text">記憶形成</text>
+  <text x="560" y="360" class="label-text">予測符号化</text>
+  <text x="240" y="375" class="small-text">特徴抽出</text>
+  <text x="400" y="375" class="small-text">長期増強</text>
+  <text x="560" y="375" class="small-text">ベイズ推論</text>
+  
+  <!-- Level 3: Cognitive Functions -->
+  <rect x="160" y="230" width="480" height="70" fill="#fef3c7" stroke="var(--svg-warning)" stroke-width="2" rx="8"/>
+  <text x="400" y="250" class="layer-title" text-anchor="middle" fill="var(--svg-text)">認知機能層</text>
+  <text x="260" y="270" class="label-text">注意</text>
+  <text x="400" y="270" class="label-text">ワーキングメモリ</text>
+  <text x="540" y="270" class="label-text">実行機能</text>
+  <text x="260" y="285" class="small-text">選択的処理</text>
+  <text x="400" y="285" class="small-text">一時保持</text>
+  <text x="540" y="285" class="small-text">制御・計画</text>
+  
+  <!-- Level 4: Integration -->
+  <rect x="180" y="140" width="440" height="70" fill="#fee2e2" stroke="var(--svg-error)" stroke-width="2" rx="8"/>
+  <text x="400" y="160" class="layer-title" text-anchor="middle" fill="var(--svg-text)">統合層</text>
+  <text x="280" y="180" class="label-text">グローバルワークスペース</text>
+  <text x="520" y="180" class="label-text">統合情報理論(IIT)</text>
+  <text x="280" y="195" class="small-text">大域的アクセス</text>
+  <text x="520" y="195" class="small-text">Φ値の計算</text>
+  
+  <!-- Level 5: Consciousness -->
+  <rect x="200" y="50" width="400" height="70" fill="url(#consciousness-gradient)" stroke="var(--svg-warning)" stroke-width="3" rx="8"/>
+  <text x="400" y="75" class="layer-title" text-anchor="middle">現象的意識</text>
+  <text x="300" y="95" class="label-text">クオリア</text>
+  <text x="400" y="95" class="label-text">自己認識</text>
+  <text x="500" y="95" class="label-text">主観的体験</text>
+  <text x="300" y="110" class="small-text">質感</text>
+  <text x="400" y="110" class="small-text">メタ認知</text>
+  <text x="500" y="110" class="small-text">一人称視点</text>
+  
+  <!-- Emergence Arrows -->
+  <path d="M 400 500 L 400 480" class="emergence-arrow"/>
+  <path d="M 400 410 L 400 390" class="emergence-arrow"/>
+  <path d="M 400 320 L 400 300" class="emergence-arrow"/>
+  <path d="M 400 230 L 400 210" class="emergence-arrow"/>
+  <path d="M 400 140 L 400 120" class="emergence-arrow"/>
+  
+  <!-- Feedback Loops -->
+  <path d="M 580 85 Q 650 250 580 455" class="feedback-loop"/>
+  <path d="M 220 85 Q 150 250 220 455" class="feedback-loop"/>
+  
+  <!-- Annotations -->
+  <text x="680" y="250" class="small-text" transform="rotate(90 680 250)">下方因果</text>
+  <text x="120" y="250" class="small-text" transform="rotate(-90 120 250)">上方因果</text>
+  
+  <!-- Complexity Indicator -->
+  <text x="50" y="540" class="label-text" text-anchor="middle" transform="rotate(-90 50 540)">複雑性</text>
+  <line x1="70" y1="550" x2="70" y2="70" stroke="var(--svg-secondary)" stroke-width="2"/>
+  <polygon points="70,60 65,70 75,70" fill="var(--svg-secondary)"/>
+  
+  <!-- Integration Indicator -->
+  <text x="750" y="540" class="label-text" text-anchor="middle" transform="rotate(90 750 540)">統合度</text>
+  <line x1="730" y1="550" x2="730" y2="70" stroke="var(--svg-secondary)" stroke-width="2"/>
+  <polygon points="730,60 725,70 735,70" fill="var(--svg-secondary)"/>
+</svg>
