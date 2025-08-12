@@ -7,7 +7,7 @@
 </div>
 
 <div class="sidebar-content">
-    <!-- Table of Contents -->
+    <!-- Unified Table of Contents -->
     <div class="nav-section">
         <h3 class="nav-section-title">目次</h3>
         <ul class="nav-list">
@@ -34,6 +34,34 @@
                     <span class="nav-number">{{ forloop.index }}</span>
                     <span class="nav-title">{{ chapter.title }}</span>
                 </a>
+                
+                <!-- Sub-sections if available -->
+                {% if chapter.sections %}
+                <ul class="nav-subsections">
+                    {% for section in chapter.sections %}
+                    <li class="nav-subsection">
+                        <a href="{{ site.baseurl }}{{ section.path }}" 
+                           class="nav-sublink{% if page.url == section.path %} active{% endif %}"
+                           aria-current="{% if page.url == section.path %}page{% endif %}">
+                            {{ section.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+            {% endif %}
+
+            <!-- Appendices -->
+            {% if site.data.navigation.appendices and site.data.navigation.appendices.size > 0 %}
+            {% for appendix in site.data.navigation.appendices %}
+            <li class="nav-item">
+                <a href="{{ site.baseurl }}{{ appendix.path }}" 
+                   class="nav-link{% if page.url contains appendix.path %} active{% endif %}"
+                   aria-current="{% if page.url contains appendix.path %}page{% endif %}">
+                    <span class="nav-title">{{ appendix.title }}</span>
+                </a>
             </li>
             {% endfor %}
             {% endif %}
@@ -59,6 +87,9 @@
 {% if site.data.navigation.chapters %}
     {% assign total_pages = site.data.navigation.chapters.size %}
 {% endif %}
+{% if site.data.navigation.appendices %}
+    {% assign total_pages = total_pages | plus: site.data.navigation.appendices.size %}
+{% endif %}
 
 {% assign current_index = 0 %}
 {% for chapter in site.data.navigation.chapters %}
@@ -67,6 +98,15 @@
         {% break %}
     {% endif %}
 {% endfor %}
+
+{% if current_index == 0 and site.data.navigation.appendices %}
+    {% for appendix in site.data.navigation.appendices %}
+        {% if page.url contains appendix.path %}
+            {% assign current_index = site.data.navigation.chapters.size | plus: forloop.index %}
+            {% break %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
 
 {% if current_index > 0 %}
 <div class="progress-container">
@@ -175,6 +215,38 @@
     white-space: nowrap;
 }
 
+.nav-subsections {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    background-color: var(--color-bg-secondary);
+}
+
+.nav-subsection {
+    margin-bottom: 0;
+}
+
+.nav-sublink {
+    display: block;
+    padding: var(--space-2) var(--space-4) var(--space-2) var(--space-12);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: var(--font-size-xs);
+    transition: all var(--transition-fast);
+    border-left: 3px solid transparent;
+}
+
+.nav-sublink:hover {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-primary);
+}
+
+.nav-sublink.active {
+    background-color: var(--color-primary);
+    color: white;
+    border-left-color: var(--color-primary-hover);
+}
+
 /* Progress Indicator */
 .progress-container {
     margin: var(--space-6) var(--space-4) var(--space-4);
@@ -210,6 +282,10 @@
     
     .nav-link {
         padding: var(--space-3) var(--space-3);
+    }
+    
+    .nav-sublink {
+        padding: var(--space-2) var(--space-3) var(--space-2) var(--space-8);
     }
     
     .nav-number {

@@ -18,6 +18,13 @@
     {% endfor %}
 {% endif %}
 
+<!-- Add appendices -->
+{% if navigation.appendices %}
+    {% for item in navigation.appendices %}
+        {% assign all_pages = all_pages | push: item %}
+    {% endfor %}
+{% endif %}
+
 <!-- Add afterword -->
 {% if navigation.afterword %}
     {% for item in navigation.afterword %}
@@ -36,7 +43,11 @@
     {% assign normalized_item_path = item.path | remove_first: "/" | append: "/" %}
     {% assign normalized_page_url = page.url | remove_first: "/" | append: "/" %}
     
-    {% if normalized_page_url == normalized_item_path %}
+    <!-- Also check without trailing slash -->
+    {% assign alt_item_path = item.path | remove_first: "/" | remove: "/" %}
+    {% assign alt_page_url = page.url | remove_first: "/" | remove: "/" %}
+    
+    {% if normalized_page_url == normalized_item_path or alt_page_url == alt_item_path or page.url contains item.path %}
         {% assign current_index = forloop.index0 %}
         {% break %}
     {% endif %}
@@ -326,6 +337,28 @@
     
     .page-nav-label {
         font-size: var(--font-size-xs);
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .page-nav-link {
+        border-width: 2px;
+    }
+    
+    .page-nav-link:hover:not(.page-nav-disabled) {
+        border-width: 3px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .page-nav-link {
+        transition: none;
+    }
+    
+    .page-nav-link:hover:not(.page-nav-disabled) {
+        transform: none;
     }
 }
 </style>
