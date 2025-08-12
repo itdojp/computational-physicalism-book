@@ -1,11 +1,8 @@
 # Navigation structure
-# はじめに section with sub-pages
+# はじめに section
 introduction:
   - title: "はじめに"
     path: "/introduction/"
-    sections:
-      - title: "読書ガイド"
-        path: "/introduction/reading-guide/"
 
 # Main chapters
 chapters:
@@ -17,16 +14,11 @@ chapters:
     path: "/chapters/chapter03/"
   - title: "実装への道筋"
     path: "/chapters/chapter04/"
-    sections:
-      - title: "実装例"
-        path: "/chapters/chapter04/implementation-examples/"
   - title: "倫理的・社会的含意"
     path: "/chapters/chapter05/"
 
-# Appendices
+# Appendices (currently empty)
 appendices:
-  - title: "用語集"
-    path: "/glossary/"
 
 # Afterword
 afterword:
