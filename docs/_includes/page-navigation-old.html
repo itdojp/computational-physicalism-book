@@ -1,85 +1,71 @@
 <!-- Page Navigation (Previous/Next) -->
 {% assign navigation = site.data.navigation %}
 
-<!-- Build complete page sequence -->
-{% assign all_pages = '' | split: '' %}
+<!-- Build flat navigation list -->
+{% assign all_pages = "" | split: "" %}
 
 <!-- Add introduction -->
-{% if navigation.introduction %}
-    {% for item in navigation.introduction %}
-        {% assign all_pages = all_pages | push: item %}
-    {% endfor %}
-{% endif %}
-
-<!-- Add chapters -->
-{% if navigation.chapters %}
-    {% for item in navigation.chapters %}
-        {% assign all_pages = all_pages | push: item %}
-    {% endfor %}
-{% endif %}
-
-<!-- Add appendices -->
-{% if navigation.appendices %}
-    {% for item in navigation.appendices %}
-        {% assign all_pages = all_pages | push: item %}
-    {% endfor %}
-{% endif %}
-
-<!-- Add afterword -->
-{% if navigation.afterword %}
-    {% for item in navigation.afterword %}
-        {% assign all_pages = all_pages | push: item %}
-    {% endfor %}
-{% endif %}
-
-<!-- Find current page and set prev/next -->
-{% assign current_found = false %}
-{% assign prev_item = nil %}
-{% assign next_item = nil %}
-{% assign current_index = nil %}
-
-{% for item in all_pages %}
-    <!-- Normalize URLs for comparison -->
-    {% assign normalized_item_path = item.path | remove_first: "/" | append: "/" %}
-    {% assign normalized_page_url = page.url | remove_first: "/" | append: "/" %}
-    
-    <!-- Also check without trailing slash -->
-    {% assign alt_item_path = item.path | remove_first: "/" | remove: "/" %}
-    {% assign alt_page_url = page.url | remove_first: "/" | remove: "/" %}
-    
-    {% if normalized_page_url == normalized_item_path or alt_page_url == alt_item_path or page.url contains item.path %}
-        {% assign current_index = forloop.index0 %}
-        {% break %}
-    {% endif %}
+{% for item in navigation.introduction %}
+  {% assign all_pages = all_pages | push: item %}
 {% endfor %}
 
-{% if current_index %}
-    {% assign prev_index = current_index | minus: 1 %}
-    {% assign next_index = current_index | plus: 1 %}
-    
-    {% if prev_index >= 0 %}
-        {% assign prev_item = all_pages[prev_index] %}
-    {% endif %}
-    
-    {% if next_index < all_pages.size %}
-        {% assign next_item = all_pages[next_index] %}
-    {% endif %}
-{% endif %}
+<!-- Add chapters -->
+{% for chapter in navigation.chapters %}
+  {% assign all_pages = all_pages | push: chapter %}
+{% endfor %}
+
+<!-- Add afterword -->
+{% for item in navigation.afterword %}
+  {% assign all_pages = all_pages | push: item %}
+{% endfor %}
+
+<!-- Find current page and its neighbors -->
+{% assign prev_page = nil %}
+{% assign next_page = nil %}
+{% assign current_found = false %}
+
+{% for item in all_pages %}
+  {% assign item_path = item.path %}
+  {% assign page_path = page.url %}
+  
+  <!-- Normalize paths for comparison -->
+  {% if item_path == page_path 
+        or item_path == page_path | append: "/" 
+        or item_path == page_path | remove: "index.html" 
+        or item_path | append: "index.html" == page_path %}
+    {% assign current_found = true %}
+  {% endif %}
+  
+  {% if current_found %}
+    {% unless forloop.last %}
+      {% assign next_index = forloop.index %}
+      {% assign next_page = all_pages[next_index] %}
+    {% endunless %}
+    {% break %}
+  {% else %}
+    {% assign prev_page = item %}
+  {% endif %}
+{% endfor %}
 
 <!-- Navigation Container -->
 <nav class="page-nav" aria-label="Page navigation">
     <div class="page-nav-container">
         <!-- Previous Page -->
         <div class="page-nav-item page-nav-prev">
-            {% if prev_item %}
-            <a href="{{ site.baseurl }}{{ prev_item.path }}" class="page-nav-link" rel="prev">
+            {% if prev_page %}
+            <a href="{{ site.baseurl }}{{ prev_page.path }}" class="page-nav-link" rel="prev">
                 <div class="page-nav-direction">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="page-nav-arrow">
                         <polyline points="15,18 9,12 15,6"></polyline>
                     </svg>
                     <span class="page-nav-label">前へ</span>
                 </div>
-                <div class="page-nav-title">{{ prev_item.title | truncate: 50 }}</div>
+                {% assign prev_title = prev_page.title %}
+                {% if prev_page.title contains '：' %}
+                    {% assign title_parts = prev_page.title | split: '：' %}
+                    {% assign prev_title = title_parts[1] | default: prev_page.title %}
+                {% endif %}
+                <div class="page-nav-title">{{ prev_title | truncate: 50 }}</div>
             </a>
             {% else %}
             <div class="page-nav-link page-nav-disabled">
@@ -109,15 +95,20 @@
 
         <!-- Next Page -->
         <div class="page-nav-item page-nav-next">
-            {% if next_item %}
-            <a href="{{ site.baseurl }}{{ next_item.path }}" class="page-nav-link" rel="next">
+            {% if next_page %}
+            <a href="{{ site.baseurl }}{{ next_page.path }}" class="page-nav-link" rel="next">
                 <div class="page-nav-direction">
                     <span class="page-nav-label">次へ</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="page-nav-arrow">
                         <polyline points="9,18 15,12 9,6"></polyline>
                     </svg>
                 </div>
-                <div class="page-nav-title">{{ next_item.title | truncate: 50 }}</div>
+                {% assign next_title = next_page.title %}
+                {% if next_page.title contains '：' %}
+                    {% assign title_parts = next_page.title | split: '：' %}
+                    {% assign next_title = title_parts[1] | default: next_page.title %}
+                {% endif %}
+                <div class="page-nav-title">{{ next_title | truncate: 50 }}</div>
             </a>
             {% else %}
             <div class="page-nav-link page-nav-disabled">
@@ -337,28 +328,6 @@
     
     .page-nav-label {
         font-size: var(--font-size-xs);
-    }
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-    .page-nav-link {
-        border-width: 2px;
-    }
-    
-    .page-nav-link:hover:not(.page-nav-disabled) {
-        border-width: 3px;
-    }
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-    .page-nav-link {
-        transition: none;
-    }
-    
-    .page-nav-link:hover:not(.page-nav-disabled) {
-        transform: none;
     }
 }
 </style>

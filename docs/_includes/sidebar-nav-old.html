@@ -10,15 +10,15 @@
     <!-- Unified Table of Contents -->
     <div class="nav-section">
         <h3 class="nav-section-title">目次</h3>
-        <ul class="nav-list">
+        <ul class="nav-list toc-list">
             <!-- Introduction -->
             {% if site.data.navigation.introduction %}
             {% for item in site.data.navigation.introduction %}
-            <li class="nav-item">
+            <li class="nav-item toc-item toc-chapter">
                 <a href="{{ site.baseurl }}{{ item.path }}" 
-                   class="nav-link{% if page.url contains item.path %} active{% endif %}"
-                   aria-current="{% if page.url contains item.path %}page{% endif %}">
-                    {{ item.title }}
+                   class="nav-link{% if page.url == item.path or page.url == item.path | append: 'index.html' %} active{% endif %}"
+                   aria-current="{% if page.url == item.path or page.url == item.path | append: 'index.html' %}page{% endif %}">
+                    <span class="chapter-title">{{ item.title }}</span>
                 </a>
             </li>
             {% endfor %}
@@ -27,40 +27,17 @@
             <!-- Chapters -->
             {% if site.data.navigation.chapters %}
             {% for chapter in site.data.navigation.chapters %}
-            <li class="nav-item">
+            <li class="nav-item toc-item toc-chapter">
                 <a href="{{ site.baseurl }}{{ chapter.path }}" 
-                   class="nav-link{% if page.url contains chapter.path %} active{% endif %}"
-                   aria-current="{% if page.url contains chapter.path %}page{% endif %}">
-                    <span class="nav-number">{{ forloop.index }}</span>
-                    <span class="nav-title">{{ chapter.title }}</span>
-                </a>
-                
-                <!-- Sub-sections if available -->
-                {% if chapter.sections %}
-                <ul class="nav-subsections">
-                    {% for section in chapter.sections %}
-                    <li class="nav-subsection">
-                        <a href="{{ site.baseurl }}{{ section.path }}" 
-                           class="nav-sublink{% if page.url == section.path %} active{% endif %}"
-                           aria-current="{% if page.url == section.path %}page{% endif %}">
-                            {{ section.title }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </li>
-            {% endfor %}
-            {% endif %}
-
-            <!-- Appendices -->
-            {% if site.data.navigation.appendices and site.data.navigation.appendices.size > 0 %}
-            {% for appendix in site.data.navigation.appendices %}
-            <li class="nav-item">
-                <a href="{{ site.baseurl }}{{ appendix.path }}" 
-                   class="nav-link{% if page.url contains appendix.path %} active{% endif %}"
-                   aria-current="{% if page.url contains appendix.path %}page{% endif %}">
-                    <span class="nav-title">{{ appendix.title }}</span>
+                   class="nav-link{% if page.url == chapter.path or page.url == chapter.path | append: 'index.html' %} active{% endif %}"
+                   aria-current="{% if page.url == chapter.path or page.url == chapter.path | append: 'index.html' %}page{% endif %}">
+                    {% assign clean_title = chapter.title %}
+                    {% if chapter.title contains '：' %}
+                        {% assign title_parts = chapter.title | split: '：' %}
+                        {% assign clean_title = title_parts[1] | default: chapter.title %}
+                    {% endif %}
+                    <span class="chapter-number">第{{ forloop.index }}章</span>
+                    <span class="chapter-title">{{ clean_title }}</span>
                 </a>
             </li>
             {% endfor %}
@@ -69,11 +46,11 @@
             <!-- Afterword -->
             {% if site.data.navigation.afterword %}
             {% for item in site.data.navigation.afterword %}
-            <li class="nav-item">
+            <li class="nav-item toc-item toc-chapter">
                 <a href="{{ site.baseurl }}{{ item.path }}" 
-                   class="nav-link{% if page.url contains item.path %} active{% endif %}"
-                   aria-current="{% if page.url contains item.path %}page{% endif %}">
-                    {{ item.title }}
+                   class="nav-link{% if page.url == item.path or page.url == item.path | append: 'index.html' %} active{% endif %}"
+                   aria-current="{% if page.url == item.path or page.url == item.path | append: 'index.html' %}page{% endif %}">
+                    <span class="chapter-title">{{ item.title }}</span>
                 </a>
             </li>
             {% endfor %}
@@ -83,12 +60,9 @@
 </div>
 
 <!-- Progress Indicator -->
-{% assign total_pages = 0 %}
-{% if site.data.navigation.chapters %}
-    {% assign total_pages = site.data.navigation.chapters.size %}
-{% endif %}
+{% assign total_pages = site.data.navigation.chapters.size %}
 {% if site.data.navigation.appendices %}
-    {% assign total_pages = total_pages | plus: site.data.navigation.appendices.size %}
+{% assign total_pages = total_pages | plus: site.data.navigation.appendices.size %}
 {% endif %}
 
 {% assign current_index = 0 %}
@@ -99,7 +73,7 @@
     {% endif %}
 {% endfor %}
 
-{% if current_index == 0 and site.data.navigation.appendices %}
+{% if current_index == 0 %}
     {% for appendix in site.data.navigation.appendices %}
         {% if page.url contains appendix.path %}
             {% assign current_index = site.data.navigation.chapters.size | plus: forloop.index %}
@@ -188,31 +162,40 @@
     font-weight: 500;
 }
 
-.nav-number {
-    display: inline-flex;
+/* Table of Contents Styles */
+.toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.toc-item {
+    margin-bottom: var(--space-1);
+}
+
+.toc-chapter .nav-link {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    background-color: var(--color-bg-tertiary);
-    color: var(--color-text-secondary);
-    border-radius: 50%;
+    padding: var(--space-2) var(--space-4);
+}
+
+.chapter-number {
     font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    margin-right: var(--space-2);
     font-weight: 600;
-    margin-right: var(--space-3);
     flex-shrink: 0;
 }
 
-.nav-link.active .nav-number {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-}
-
-.nav-title {
+.chapter-title {
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.nav-link.active .chapter-number {
+    color: white;
 }
 
 .nav-subsections {
