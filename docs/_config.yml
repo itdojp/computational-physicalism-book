@@ -4,9 +4,30 @@ author: "太田和彦（株式会社アイティードゥ）"
 baseurl: "/computational-physicalism-book"
 url: "https://itdojp.github.io"
 
-# v3.0 Design System Configuration
+# Jekyll Configuration
 markdown: kramdown
 highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-relative-links
+
+# Plugin configurations
+relative_links:
+  enabled: true
+  collections: false
 
 # Use custom book layout as default
 defaults:
@@ -15,9 +36,11 @@ defaults:
       type: "pages"
     values:
       layout: "book"
-
-# plugins:
-#   - jekyll-feed
+  - scope:
+      path: "chapters"
+      type: "pages"
+    values:
+      layout: "chapter"
 
 # Repository information for edit links
 repository:
