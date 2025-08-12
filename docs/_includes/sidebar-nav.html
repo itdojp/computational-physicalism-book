@@ -31,8 +31,13 @@
                 <a href="{{ site.baseurl }}{{ chapter.path }}" 
                    class="nav-link{% if page.url == chapter.path or page.url == chapter.path | append: 'index.html' %} active{% endif %}"
                    aria-current="{% if page.url == chapter.path or page.url == chapter.path | append: 'index.html' %}page{% endif %}">
+                    {% assign clean_title = chapter.title %}
+                    {% if chapter.title contains '：' %}
+                        {% assign title_parts = chapter.title | split: '：' %}
+                        {% assign clean_title = title_parts[1] | default: chapter.title %}
+                    {% endif %}
                     <span class="chapter-number">第{{ forloop.index }}章</span>
-                    <span class="chapter-title">{{ chapter.title | remove: '第1章：' | remove: '第2章：' | remove: '第3章：' | remove: '第4章：' | remove: '第5章：' }}</span>
+                    <span class="chapter-title">{{ clean_title }}</span>
                 </a>
             </li>
             {% endfor %}
