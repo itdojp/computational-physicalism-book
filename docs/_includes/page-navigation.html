@@ -9,6 +9,10 @@
     {% for item in navigation.introduction %}
         {% if current_found == false and page.url contains item.path %}
             {% assign current_found = true %}
+            <!-- If this is the last introduction item, next should be first chapter -->
+            {% if forloop.last and navigation.chapters.size > 0 %}
+                {% assign next_item = navigation.chapters.first %}
+            {% endif %}
         {% elsif current_found == false %}
             {% assign prev_item = item %}
         {% elsif current_found == true and next_item == nil %}

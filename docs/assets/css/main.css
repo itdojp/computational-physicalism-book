@@ -419,9 +419,10 @@ img {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding: 0 var(--space-4) !important;
-    gap: var(--space-4) !important;
+    padding: 0 var(--space-3) !important;
+    gap: var(--space-3) !important;
     min-height: var(--header-height) !important;
+    height: var(--header-height) !important;
     box-sizing: border-box !important;
 }
 
@@ -429,6 +430,7 @@ img {
     display: flex !important;
     align-items: center !important;
     gap: var(--space-3) !important;
+    flex-shrink: 0 !important;
 }
 
 .header-right {
@@ -436,6 +438,7 @@ img {
     align-items: center !important;
     gap: var(--space-3) !important;
     margin-left: auto !important;
+    padding-right: 0 !important;
 }
 
 /* Remove header-center if it exists */
@@ -448,8 +451,8 @@ img {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 40px !important;
-    height: 40px !important;
+    width: 36px !important;
+    height: 36px !important;
     padding: 0 !important;
     margin: 0 !important;
     background: transparent !important;
@@ -461,11 +464,48 @@ img {
     flex-shrink: 0 !important;
 }
 
+/* Header Title Fix */
+.header-title {
+    text-decoration: none !important;
+    color: var(--color-text-primary) !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.header-title h1 {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: var(--font-size-lg) !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+}
+
 /* Search Container Fix */
 .search-container {
     position: relative !important;
-    width: 300px !important;
+    width: 280px !important;
     max-width: 100% !important;
+}
+
+/* Theme Toggle and GitHub Link Fix */
+.theme-toggle,
+.github-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-md) !important;
+    cursor: pointer !important;
+    transition: all var(--transition-fast) !important;
+    color: var(--color-text-primary) !important;
+    flex-shrink: 0 !important;
+    text-decoration: none !important;
 }
 
 /* Mobile Responsive Fixes */
