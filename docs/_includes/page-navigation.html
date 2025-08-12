@@ -29,13 +29,10 @@
   {% assign page_path = page.url %}
   
   <!-- Normalize paths for comparison -->
-  {% if item_path == page_path %}
-    {% assign current_found = true %}
-  {% elsif item_path == page_path | append: "/" %}
-    {% assign current_found = true %}
-  {% elsif item_path == page_path | remove: "index.html" %}
-    {% assign current_found = true %}
-  {% elsif item_path | append: "index.html" == page_path %}
+  {% if item_path == page_path 
+        or item_path == page_path | append: "/" 
+        or item_path == page_path | remove: "index.html" 
+        or item_path | append: "index.html" == page_path %}
     {% assign current_found = true %}
   {% endif %}
   
@@ -63,7 +60,12 @@
                     </svg>
                     <span class="page-nav-label">前へ</span>
                 </div>
-                <div class="page-nav-title">{{ prev_page.title | remove: '第1章：' | remove: '第2章：' | remove: '第3章：' | remove: '第4章：' | remove: '第5章：' | truncate: 50 }}</div>
+                {% assign prev_title = prev_page.title %}
+                {% if prev_page.title contains '：' %}
+                    {% assign title_parts = prev_page.title | split: '：' %}
+                    {% assign prev_title = title_parts[1] | default: prev_page.title %}
+                {% endif %}
+                <div class="page-nav-title">{{ prev_title | truncate: 50 }}</div>
             </a>
             {% else %}
             <div class="page-nav-link page-nav-disabled">
@@ -101,7 +103,12 @@
                         <polyline points="9,18 15,12 9,6"></polyline>
                     </svg>
                 </div>
-                <div class="page-nav-title">{{ next_page.title | remove: '第1章：' | remove: '第2章：' | remove: '第3章：' | remove: '第4章：' | remove: '第5章：' | truncate: 50 }}</div>
+                {% assign next_title = next_page.title %}
+                {% if next_page.title contains '：' %}
+                    {% assign title_parts = next_page.title | split: '：' %}
+                    {% assign next_title = title_parts[1] | default: next_page.title %}
+                {% endif %}
+                <div class="page-nav-title">{{ next_title | truncate: 50 }}</div>
             </a>
             {% else %}
             <div class="page-nav-link page-nav-disabled">
