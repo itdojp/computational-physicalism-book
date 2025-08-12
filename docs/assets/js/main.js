@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeSidebar();
     initializeCodeCopy();
     initializeSearch();
+    initializeMobileNavigation();
     
     // Add smooth scrolling to anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -70,10 +71,18 @@ function initializeSearch() {
     }
 }
 
+// Initialize mobile navigation if not already done
+function initializeMobileNavigation() {
+    if (typeof window.initMobileNavigation === 'function') {
+        window.initMobileNavigation();
+    }
+}
+
 // Export for use in other modules
 window.mainInit = {
     initializeTheme,
     initializeSidebar,
     initializeCodeCopy,
-    initializeSearch
+    initializeSearch,
+    initializeMobileNavigation
 };

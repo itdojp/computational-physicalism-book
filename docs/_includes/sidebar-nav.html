@@ -7,12 +7,11 @@
 </div>
 
 <div class="sidebar-content">
-    <!-- Unified Table of Contents -->
+    <!-- Introduction -->
+    {% if site.data.navigation.introduction %}
     <div class="nav-section">
-        <h3 class="nav-section-title">目次</h3>
+        <h3 class="nav-section-title">はじめに</h3>
         <ul class="nav-list">
-            <!-- Introduction -->
-            {% if site.data.navigation.introduction %}
             {% for item in site.data.navigation.introduction %}
             <li class="nav-item">
                 <a href="{{ site.baseurl }}{{ item.path }}" 
@@ -22,10 +21,15 @@
                 </a>
             </li>
             {% endfor %}
-            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
 
-            <!-- Chapters -->
-            {% if site.data.navigation.chapters %}
+    <!-- Chapters -->
+    {% if site.data.navigation.chapters %}
+    <div class="nav-section">
+        <h3 class="nav-section-title">章</h3>
+        <ul class="nav-list">
             {% for chapter in site.data.navigation.chapters %}
             <li class="nav-item">
                 <a href="{{ site.baseurl }}{{ chapter.path }}" 
@@ -51,44 +55,34 @@
                 {% endif %}
             </li>
             {% endfor %}
-            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
 
-            <!-- Appendices -->
-            {% if site.data.navigation.appendices and site.data.navigation.appendices.size > 0 %}
+    <!-- Appendices -->
+    {% if site.data.navigation.appendices %}
+    <div class="nav-section">
+        <h3 class="nav-section-title">付録</h3>
+        <ul class="nav-list">
             {% for appendix in site.data.navigation.appendices %}
             <li class="nav-item">
                 <a href="{{ site.baseurl }}{{ appendix.path }}" 
                    class="nav-link{% if page.url contains appendix.path %} active{% endif %}"
                    aria-current="{% if page.url contains appendix.path %}page{% endif %}">
+                    <span class="nav-number">{{ appendix.title | slice: 2, 1 }}</span>
                     <span class="nav-title">{{ appendix.title }}</span>
                 </a>
             </li>
             {% endfor %}
-            {% endif %}
-
-            <!-- Afterword -->
-            {% if site.data.navigation.afterword %}
-            {% for item in site.data.navigation.afterword %}
-            <li class="nav-item">
-                <a href="{{ site.baseurl }}{{ item.path }}" 
-                   class="nav-link{% if page.url contains item.path %} active{% endif %}"
-                   aria-current="{% if page.url contains item.path %}page{% endif %}">
-                    {{ item.title }}
-                </a>
-            </li>
-            {% endfor %}
-            {% endif %}
         </ul>
     </div>
+    {% endif %}
 </div>
 
 <!-- Progress Indicator -->
-{% assign total_pages = 0 %}
-{% if site.data.navigation.chapters %}
-    {% assign total_pages = site.data.navigation.chapters.size %}
-{% endif %}
+{% assign total_pages = site.data.navigation.chapters.size %}
 {% if site.data.navigation.appendices %}
-    {% assign total_pages = total_pages | plus: site.data.navigation.appendices.size %}
+{% assign total_pages = total_pages | plus: site.data.navigation.appendices.size %}
 {% endif %}
 
 {% assign current_index = 0 %}
@@ -99,7 +93,7 @@
     {% endif %}
 {% endfor %}
 
-{% if current_index == 0 and site.data.navigation.appendices %}
+{% if current_index == 0 %}
     {% for appendix in site.data.navigation.appendices %}
         {% if page.url contains appendix.path %}
             {% assign current_index = site.data.navigation.chapters.size | plus: forloop.index %}

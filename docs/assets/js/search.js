@@ -39,11 +39,11 @@
         // For now, we'll create a simple index from the current page
         const pages = [
             { title: 'はじめに', url: '/introduction/', content: '計算論的物理主義の概要' },
-            { title: '第1章：計算論的物理主義の基礎', url: '/chapters/chapter01/', content: '理論的基盤の解説' },
-            { title: '第2章：計算可能性理論による厳密な証明', url: '/chapters/chapter02/', content: '数学的証明' },
-            { title: '第3章：既存AI研究との比較分析', url: '/chapters/chapter03/', content: 'AI研究の比較' },
-            { title: '第4章：実装への道筋', url: '/chapters/chapter04/', content: '実装方法論' },
-            { title: '第5章：倫理的・社会的含意', url: '/chapters/chapter05/', content: '社会への影響' },
+            { title: '計算論的物理主義の基礎', url: '/chapters/chapter01/', content: '理論的基盤の解説' },
+            { title: '計算可能性理論による厳密な証明', url: '/chapters/chapter02/', content: '数学的証明' },
+            { title: '既存AI研究との比較分析', url: '/chapters/chapter03/', content: 'AI研究の比較' },
+            { title: '実装への道筋', url: '/chapters/chapter04/', content: '実装方法論' },
+            { title: '倫理的・社会的含意', url: '/chapters/chapter05/', content: '社会への影響' },
             { title: 'あとがき', url: '/afterword/', content: '著者からのメッセージ' }
         ];
         
