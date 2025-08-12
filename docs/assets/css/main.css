@@ -414,6 +414,7 @@ img {
   }
 }
 
+<<<<<<< HEAD
 /* Header Navigation Styles */
 .book-header {
     display: flex;
@@ -622,7 +623,6 @@ img {
 .sidebar-overlay.active {
     display: block;
 }
-
 /* Print Styles */
 @media print {
   .book-header,
