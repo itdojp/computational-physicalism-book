@@ -4,63 +4,53 @@
 {% assign prev_item = nil %}
 {% assign next_item = nil %}
 
-<!-- Build flat navigation list -->
-{% assign all_items = "" | split: "" %}
-
-<!-- Add introduction items -->
+<!-- Search through introduction first -->
 {% if navigation.introduction %}
     {% for item in navigation.introduction %}
-        {% assign all_items = all_items | push: item %}
-        {% if item.sections %}
-            {% for section in item.sections %}
-                {% assign all_items = all_items | push: section %}
-            {% endfor %}
+        {% if current_found == false and page.url contains item.path %}
+            {% assign current_found = true %}
+        {% elsif current_found == false %}
+            {% assign prev_item = item %}
+        {% elsif current_found == true and next_item == nil %}
+            {% assign next_item = item %}
+            {% break %}
         {% endif %}
     {% endfor %}
 {% endif %}
 
-<!-- Add chapter items -->
-{% if navigation.chapters %}
-    {% for chapter in navigation.chapters %}
-        {% assign all_items = all_items | push: chapter %}
-        {% if chapter.sections %}
-            {% for section in chapter.sections %}
-                {% assign all_items = all_items | push: section %}
-            {% endfor %}
+<!-- Search through chapters -->
+{% if current_found == false %}
+    {% for item in navigation.chapters %}
+        {% if current_found == false and page.url contains item.path %}
+            {% assign current_found = true %}
+            {% if forloop.first and navigation.introduction.size > 0 %}
+                {% assign prev_item = navigation.introduction.last %}
+            {% endif %}
+        {% elsif current_found == false %}
+            {% assign prev_item = item %}
+        {% elsif current_found == true and next_item == nil %}
+            {% assign next_item = item %}
+            {% break %}
         {% endif %}
     {% endfor %}
 {% endif %}
 
-<!-- Add appendices -->
-{% if navigation.appendices %}
-    {% for appendix in navigation.appendices %}
-        {% assign all_items = all_items | push: appendix %}
-    {% endfor %}
-{% endif %}
-
-<!-- Add afterword -->
-{% if navigation.afterword %}
-    {% for item in navigation.afterword %}
-        {% assign all_items = all_items | push: item %}
-    {% endfor %}
-{% endif %}
-
-<!-- Find current, previous and next -->
-{% for item in all_items %}
-    {% if page.url == item.path or page.url == item.path | append: "index.html" %}
-        {% assign current_found = true %}
-        {% if forloop.index > 1 %}
-            {% assign prev_index = forloop.index | minus: 1 | minus: 1 %}
-            {% assign prev_item = all_items[prev_index] %}
+<!-- Search through appendices -->
+{% if current_found == false %}
+    {% for item in navigation.appendices %}
+        {% if current_found == false and page.url contains item.path %}
+            {% assign current_found = true %}
+            {% if forloop.first and navigation.chapters.size > 0 %}
+                {% assign prev_item = navigation.chapters.last %}
+            {% endif %}
+        {% elsif current_found == false %}
+            {% assign prev_item = item %}
+        {% elsif current_found == true and next_item == nil %}
+            {% assign next_item = item %}
+            {% break %}
         {% endif %}
-        {% unless forloop.last %}
-            {% assign next_index = forloop.index %}
-            {% assign next_item = all_items[next_index] %}
-        {% endunless %}
-        {% break %}
-    {% endif %}
-{% endfor %}
-
+    {% endfor %}
+{% endif %}
 
 <!-- Navigation Container -->
 <nav class="page-nav" aria-label="Page navigation">
