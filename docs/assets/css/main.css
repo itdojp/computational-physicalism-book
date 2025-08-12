@@ -421,6 +421,8 @@ img {
     justify-content: space-between;
     padding: 0 var(--space-4);
     gap: var(--space-4);
+    min-height: var(--header-height);
+    box-sizing: border-box;
 }
 
 .header-left {
@@ -438,6 +440,7 @@ img {
     display: flex;
     align-items: center;
     gap: var(--space-3);
+    margin-left: auto;
 }
 
 /* Sidebar Toggle Button */
@@ -448,12 +451,14 @@ img {
     width: 40px;
     height: 40px;
     padding: 0;
+    margin: 0;
     background: transparent;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: all var(--transition-fast);
     color: var(--color-text-primary);
+    flex-shrink: 0;
 }
 
 .sidebar-toggle:hover {
