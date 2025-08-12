@@ -8,14 +8,15 @@
     
     <title>{% if page.title %}{{ page.title | escape }} - {{ site.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
     
-    <!-- Preconnect to external domains -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Mobile Meta Tags -->
+    {% include mobile-meta.html %}
     
     <!-- CSS -->
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/css/syntax-highlighting.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/css/header-fixes.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/mobile-responsive.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/search.css' | relative_url }}">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ '/assets/favicon.ico' | relative_url }}">
@@ -152,6 +153,7 @@
     <script src="{{ '/assets/js/sidebar.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/code-copy.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/mobile-navigation.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
 </body>
 </html>

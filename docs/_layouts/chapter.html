@@ -1,0 +1,71 @@
+---
+layout: book
+---
+
+<article class="chapter-content">
+    <!-- Chapter Header -->
+    {% if page.title %}
+    <header class="chapter-header">
+        <h1 class="chapter-title">{{ page.title }}</h1>
+        {% if page.description %}
+        <div class="chapter-description">{{ page.description }}</div>
+        {% endif %}
+    </header>
+    {% endif %}
+    
+    <!-- Chapter Body -->
+    <div class="chapter-body">
+        {{ content }}
+    </div>
+</article>
+
+<style>
+/* Chapter-specific styles */
+.chapter-header {
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.chapter-title {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    line-height: var(--line-height-tight);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+}
+
+.chapter-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+    max-width: 70ch;
+}
+
+.chapter-body {
+    max-width: none;
+}
+
+.chapter-body > * {
+    max-width: 75ch;
+}
+
+.chapter-body > .full-width {
+    max-width: none;
+}
+
+/* Chapter navigation styling */
+.chapter-content + .page-navigation {
+    margin-top: var(--space-16);
+}
+
+@media (max-width: 768px) {
+    .chapter-title {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .chapter-description {
+        font-size: var(--font-size-base);
+    }
+}
+</style>
