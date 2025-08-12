@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <title>計算論的物理主義の概念フレームワーク</title>
+  <desc>物理法則、計算プロセス、知性の関係を示す概念図</desc>
+  
+  <defs>
+    <style>
+      :root {
+        --svg-bg: #ffffff;
+        --svg-text: #1a1a1a;
+        --svg-primary: #0066cc;
+        --svg-secondary: #6b7280;
+        --svg-accent: #10b981;
+        --svg-warning: #f59e0b;
+        --svg-error: #ef4444;
+      }
+      
+      .title-text {
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        fill: var(--svg-text);
+      }
+      
+      .section-title {
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        fill: var(--svg-text);
+      }
+      
+      .label-text {
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 400;
+        fill: var(--svg-text);
+      }
+      
+      .small-text {
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 10px;
+        font-weight: 400;
+        fill: var(--svg-secondary);
+      }
+      
+      .physical-layer {
+        fill: #e0f2fe;
+        stroke: var(--svg-primary);
+        stroke-width: 2;
+      }
+      
+      .computational-layer {
+        fill: #f0fdf4;
+        stroke: var(--svg-accent);
+        stroke-width: 2;
+      }
+      
+      .cognitive-layer {
+        fill: #fef3c7;
+        stroke: var(--svg-warning);
+        stroke-width: 2;
+      }
+      
+      .connector {
+        stroke: var(--svg-secondary);
+        stroke-width: 1.5;
+        fill: none;
+        stroke-dasharray: 5,3;
+      }
+      
+      .arrow {
+        stroke: var(--svg-primary);
+        stroke-width: 2;
+        fill: none;
+        marker-end: url(#arrowhead);
+      }
+    </style>
+    
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="var(--svg-primary)"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="30" class="title-text" text-anchor="middle">計算論的物理主義の概念フレームワーク</text>
+  
+  <!-- Physical Law Layer -->
+  <rect x="50" y="60" width="700" height="120" class="physical-layer" rx="8"/>
+  <text x="400" y="85" class="section-title" text-anchor="middle">物理法則層</text>
+  
+  <rect x="80" y="100" width="150" height="60" fill="white" stroke="var(--svg-primary)" stroke-width="1" rx="4"/>
+  <text x="155" y="120" class="label-text" text-anchor="middle">エネルギー保存則</text>
+  <text x="155" y="140" class="small-text" text-anchor="middle">脳: ~20W</text>
+  <text x="155" y="150" class="small-text" text-anchor="middle">GPU: ~300W</text>
+  
+  <rect x="250" y="100" width="150" height="60" fill="white" stroke="var(--svg-primary)" stroke-width="1" rx="4"/>
+  <text x="325" y="120" class="label-text" text-anchor="middle">情報理論的制約</text>
+  <text x="325" y="140" class="small-text" text-anchor="middle">シャノン限界</text>
+  <text x="325" y="150" class="small-text" text-anchor="middle">熱力学第二法則</text>
+  
+  <rect x="420" y="100" width="150" height="60" fill="white" stroke="var(--svg-primary)" stroke-width="1" rx="4"/>
+  <text x="495" y="120" class="label-text" text-anchor="middle">計算可能性</text>
+  <text x="495" y="140" class="small-text" text-anchor="middle">Church-Turing提唱</text>
+  <text x="495" y="150" class="small-text" text-anchor="middle">停止問題</text>
+  
+  <rect x="590" y="100" width="130" height="60" fill="white" stroke="var(--svg-primary)" stroke-width="1" rx="4"/>
+  <text x="655" y="120" class="label-text" text-anchor="middle">量子効果</text>
+  <text x="655" y="140" class="small-text" text-anchor="middle">デコヒーレンス</text>
+  <text x="655" y="150" class="small-text" text-anchor="middle">観測問題</text>
+  
+  <!-- Computational Process Layer -->
+  <rect x="50" y="200" width="700" height="140" class="computational-layer" rx="8"/>
+  <text x="400" y="225" class="section-title" text-anchor="middle">計算プロセス層</text>
+  
+  <rect x="80" y="240" width="200" height="80" fill="white" stroke="var(--svg-accent)" stroke-width="1" rx="4"/>
+  <text x="180" y="260" class="label-text" text-anchor="middle">生物学的計算</text>
+  <text x="180" y="280" class="small-text" text-anchor="middle">ニューロン: 86億個</text>
+  <text x="180" y="295" class="small-text" text-anchor="middle">シナプス: 100兆個</text>
+  <text x="180" y="310" class="small-text" text-anchor="middle">発火速度: ~200Hz</text>
+  
+  <rect x="300" y="240" width="200" height="80" fill="white" stroke="var(--svg-accent)" stroke-width="1" rx="4"/>
+  <text x="400" y="260" class="label-text" text-anchor="middle">デジタル計算</text>
+  <text x="400" y="280" class="small-text" text-anchor="middle">トランジスタ: 数百億個</text>
+  <text x="400" y="295" class="small-text" text-anchor="middle">メモリ: TB規模</text>
+  <text x="400" y="310" class="small-text" text-anchor="middle">クロック: ~5GHz</text>
+  
+  <rect x="520" y="240" width="200" height="80" fill="white" stroke="var(--svg-accent)" stroke-width="1" rx="4"/>
+  <text x="620" y="260" class="label-text" text-anchor="middle">ハイブリッド計算</text>
+  <text x="620" y="280" class="small-text" text-anchor="middle">ニューロモーフィック</text>
+  <text x="620" y="295" class="small-text" text-anchor="middle">量子-古典ハイブリッド</text>
+  <text x="620" y="310" class="small-text" text-anchor="middle">光計算</text>
+  
+  <!-- Cognitive Phenomena Layer -->
+  <rect x="50" y="360" width="700" height="140" class="cognitive-layer" rx="8"/>
+  <text x="400" y="385" class="section-title" text-anchor="middle">認知現象層</text>
+  
+  <rect x="80" y="400" width="150" height="80" fill="white" stroke="var(--svg-warning)" stroke-width="1" rx="4"/>
+  <text x="155" y="420" class="label-text" text-anchor="middle">パターン踏襲</text>
+  <text x="155" y="440" class="small-text" text-anchor="middle">日常的思考</text>
+  <text x="155" y="455" class="small-text" text-anchor="middle">既存知識の適用</text>
+  <text x="155" y="470" class="small-text" text-anchor="middle">計算量: O(n)</text>
+  
+  <rect x="250" y="400" width="150" height="80" fill="white" stroke="var(--svg-warning)" stroke-width="1" rx="4"/>
+  <text x="325" y="420" class="label-text" text-anchor="middle">問題解決</text>
+  <text x="325" y="440" class="small-text" text-anchor="middle">探索と最適化</text>
+  <text x="325" y="455" class="small-text" text-anchor="middle">ヒューリスティック</text>
+  <text x="325" y="470" class="small-text" text-anchor="middle">計算量: O(n²)</text>
+  
+  <rect x="420" y="400" width="150" height="80" fill="white" stroke="var(--svg-warning)" stroke-width="1" rx="4"/>
+  <text x="495" y="420" class="label-text" text-anchor="middle">創造的思考</text>
+  <text x="495" y="440" class="small-text" text-anchor="middle">新パターン発見</text>
+  <text x="495" y="455" class="small-text" text-anchor="middle">概念の組み合わせ</text>
+  <text x="495" y="470" class="small-text" text-anchor="middle">計算量: O(2ⁿ)</text>
+  
+  <rect x="590" y="400" width="130" height="80" fill="white" stroke="var(--svg-warning)" stroke-width="1" rx="4"/>
+  <text x="655" y="420" class="label-text" text-anchor="middle">意識・自己認識</text>
+  <text x="655" y="440" class="small-text" text-anchor="middle">メタ認知</text>
+  <text x="655" y="455" class="small-text" text-anchor="middle">再帰的処理</text>
+  <text x="655" y="470" class="small-text" text-anchor="middle">計算量: ?</text>
+  
+  <!-- Connections -->
+  <path d="M 155 160 L 180 240" class="arrow"/>
+  <path d="M 325 160 L 400 240" class="arrow"/>
+  <path d="M 495 160 L 400 240" class="arrow"/>
+  <path d="M 495 160 L 620 240" class="arrow"/>
+  
+  <path d="M 180 320 L 155 400" class="arrow"/>
+  <path d="M 180 320 L 325 400" class="arrow"/>
+  <path d="M 400 320 L 325 400" class="arrow"/>
+  <path d="M 400 320 L 495 400" class="arrow"/>
+  <path d="M 620 320 L 495 400" class="arrow"/>
+  <path d="M 620 320 L 655 400" class="arrow"/>
+  
+  <!-- Bottom text -->
+  <text x="400" y="530" class="label-text" text-anchor="middle">知的閾値</text>
+  <line x1="50" y1="540" x2="750" y2="540" stroke="var(--svg-error)" stroke-width="2" stroke-dasharray="10,5"/>
+  <text x="155" y="555" class="small-text" text-anchor="middle">現在のAI</text>
+  <text x="495" y="555" class="small-text" text-anchor="middle">人間レベル</text>
+  <text x="655" y="555" class="small-text" text-anchor="middle">未解明領域</text>
+</svg>
