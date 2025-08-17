@@ -1,6 +1,18 @@
 ---
 title: "はじめに"
+author: "株式会社アイティードゥ (ITDO Inc.)"
+license: "CC BY-NC-SA 4.0"
+commercial_license: "要契約"
+copyright: "© 2025 株式会社アイティードゥ (ITDO Inc.)"
 ---
+
+<!-- 
+本章は「計算論的物理主義」の一部であり、
+株式会社アイティードゥ (ITDO Inc.) が著作権を保有し、
+CC BY-NC-SA 4.0ライセンスの下で提供されます。
+商用利用は事前の契約が必要です。
+詳細：https://github.com/itdojp/it-engineer-knowledge-architecture/blob/main/LICENSE.md
+-->
 
 # はじめに
 
