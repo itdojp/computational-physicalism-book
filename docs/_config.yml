@@ -21,7 +21,7 @@ defaults:
 
 # Repository information for edit links
 repository:
-  github: "itdojp/computational-physicalism-book"
+  github: "https://github.com/itdojp/computational-physicalism-book"
 
 exclude:
   - node_modules/
