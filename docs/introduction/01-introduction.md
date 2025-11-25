@@ -1,11 +1,12 @@
 ---
 layout: book
-title: "はじめに"
+title: "（テンプレート検証用サンプル：本書本文ではありません）"
 ---
 
 # はじめに
 
-この書籍は、Book Publishing Template v2.0のテストサンプルです。
+この章は、Book Publishing Template v2.0 の動作確認のために用意されたテストサンプルです。  
+計算論的物理主義に関する本書本文の「はじめに」は、`docs/introduction/index.md` に収録されています。本書の内容を読み進める際は、そちらを参照してください。
 
 ## 本書の目的
 
