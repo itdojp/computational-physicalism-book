@@ -289,7 +289,7 @@ class ValueAlignment:
 
 ## 5. 実装ロードマップ
 
-### 5.1 短期（1-3年）：基盤技術の確立
+### 5.1 短期（1〜3年）：基盤技術の確立
 
 ```python
 def short_term_milestones():
@@ -312,7 +312,7 @@ def short_term_milestones():
     }
 ```
 
-### 5.2 中期（3-10年）：人間レベルへの接近
+### 5.2 中期（3〜10年）：人間レベルへの接近
 
 ```python
 def medium_term_goals():
@@ -330,7 +330,7 @@ def medium_term_goals():
     }
 ```
 
-### 5.3 長期（10-30年）：共進化の実現
+### 5.3 長期（10〜30年）：共進化の実現
 
 ```python
 def long_term_vision():
@@ -427,7 +427,7 @@ computational_physicalism/
 
 **コミュニティ**：https://discord.gg/comp-physicalism
 
-**次のステップ**：
+**次のステップ**は次のとおりです。
 1. 理論の実装と検証
 2. ベンチマークの構築
 3. 実験結果の共有
