@@ -262,7 +262,7 @@ def testable_predictions():
     predictions.append({
         "claim": "人間レベル知性に必要な計算量は有限",
         "estimate": "10^25 - 10^30 FLOPS",
-        "timeline": "20-50年"
+        "timeline": "20〜50年"
     })
     
     # 予測2：創造性の計算可能性
