@@ -10,6 +10,26 @@ Order resolution strategy (first match wins):
 {% assign navigation = site.data.navigation %}
 
 {%- comment -%}
+Detect if current page is the top page (root). For project Pages, the
+root is "/<repo>/"; we normalize by stripping site.baseurl. If root,
+we suppress rendering of bottom navigation to unify top-page behavior.
+{%- endcomment -%}
+{%- assign _baseurl = site.baseurl | default: '' -%}
+{%- assign _baseurl_len = _baseurl | size -%}
+{%- assign _page_url_n = page.url -%}
+{%- if _baseurl_len > 0 -%}
+  {%- assign _page_url_len = _page_url_n | size -%}
+  {%- assign _page_url_prefix = _page_url_n | slice: 0, _baseurl_len -%}
+  {%- if _page_url_prefix == _baseurl -%}
+    {%- assign _page_url_n = _page_url_n | slice: _baseurl_len, _page_url_len -%}
+  {%- endif -%}
+{%- endif -%}
+{%- assign _is_root = false -%}
+{%- if _page_url_n == '/' or _page_url_n == '' -%}
+  {%- assign _is_root = true -%}
+{%- endif -%}
+
+{%- comment -%}
 Build a flattened list from navigation data for title lookup, so we can
 display ToC titles even when order falls back to site.pages.
 {%- endcomment -%}
@@ -103,14 +123,18 @@ display ToC titles even when order falls back to site.pages.
   {%- endif -%}
 {%- endif -%}
 
+{% unless _is_root %}
 <nav class="book-navigation" aria-label="Chapter navigation">
   <div class="chapter-nav">
     {% if previous_item %}
       {%- assign prev_url = previous_item.path | default: previous_item.url -%}
-      {%- assign _baseurl = site.baseurl | default: '' -%}
       {%- assign prev_url_n = prev_url -%}
-      {%- if _baseurl and _baseurl != '' -%}
-        {%- assign prev_url_n = prev_url | remove_first: _baseurl -%}
+      {%- if _baseurl_len > 0 -%}
+        {%- assign prev_url_len = prev_url_n | size -%}
+        {%- assign prev_url_prefix = prev_url_n | slice: 0, _baseurl_len -%}
+        {%- if prev_url_prefix == _baseurl -%}
+          {%- assign prev_url_n = prev_url_n | slice: _baseurl_len, prev_url_len -%}
+        {%- endif -%}
       {%- endif -%}
       {%- assign prev_data = nil -%}
       {%- if data_items and data_items.size > 0 -%}
@@ -139,10 +163,13 @@ display ToC titles even when order falls back to site.pages.
 
     {% if next_item %}
       {%- assign next_url = next_item.path | default: next_item.url -%}
-      {%- assign _baseurl = site.baseurl | default: '' -%}
       {%- assign next_url_n = next_url -%}
-      {%- if _baseurl and _baseurl != '' -%}
-        {%- assign next_url_n = next_url | remove_first: _baseurl -%}
+      {%- if _baseurl_len > 0 -%}
+        {%- assign next_url_len = next_url_n | size -%}
+        {%- assign next_url_prefix = next_url_n | slice: 0, _baseurl_len -%}
+        {%- if next_url_prefix == _baseurl -%}
+          {%- assign next_url_n = next_url_n | slice: _baseurl_len, next_url_len -%}
+        {%- endif -%}
       {%- endif -%}
       {%- assign next_data = nil -%}
       {%- if data_items and data_items.size > 0 -%}
@@ -165,6 +192,7 @@ display ToC titles even when order falls back to site.pages.
     {% endif %}
   </div>
 </nav>
+{% endunless %}
 
 <style>
 .book-navigation { margin: 2rem 0; padding: 1rem; border-top: 1px solid var(--color-border, #e5e7eb); }
