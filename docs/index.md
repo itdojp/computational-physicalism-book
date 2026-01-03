@@ -33,9 +33,20 @@ permalink: /
 - Email: [knowledge@itdo.jp](mailto:knowledge@itdo.jp)
 - GitHub: [@itdojp](https://github.com/itdojp)
 
-## ライセンス
+## 📄 ライセンス
 
-© 2025 ITDO Inc. All rights reserved.
+本書は **Creative Commons BY-NC-SA 4.0** ライセンスで公開されています。  
+**🔓 教育・研究・個人学習での利用は自由** ですが、**💼 商用利用には事前許諾** が必要です。
+
+📋 [詳細なライセンス条件](https://github.com/itdojp/it-engineer-knowledge-architecture/blob/main/LICENSE.md)
+
+**お問い合わせ**  
+株式会社アイティードゥ (ITDO Inc.)  
+Email: [knowledge@itdo.jp](mailto:knowledge@itdo.jp)
+
+---
+
+© 2025 株式会社アイティードゥ (ITDO Inc.)
 
 ---
 
