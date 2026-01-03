@@ -422,7 +422,7 @@ computational_physicalism/
 
 **コミュニティ**：https://discord.gg/comp-physicalism
 
-**次のステップ**：
+**次のステップ**は次のとおりです。
 1. 理論の実装と検証
 2. ベンチマークの構築
 3. 実験結果の共有
