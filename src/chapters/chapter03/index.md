@@ -261,7 +261,7 @@ def testable_predictions():
     # 予測1：スケーリング則の限界
     predictions.append({
         "claim": "人間レベル知性に必要な計算量は有限",
-        "estimate": "10^25 - 10^30 FLOPS",
+        "estimate": "10^25〜10^30 FLOPS",
         "timeline": "20〜50年"
     })
     
