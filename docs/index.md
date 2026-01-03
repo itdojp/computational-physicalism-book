@@ -41,7 +41,7 @@ permalink: /
 📋 [詳細なライセンス条件](https://github.com/itdojp/it-engineer-knowledge-architecture/blob/main/LICENSE.md)
 
 **お問い合わせ**  
-株式会社アイティードゥ（ITDO Inc.）  
+株式会社アイティードゥ (ITDO Inc.)  
 Email: [knowledge@itdo.jp](mailto:knowledge@itdo.jp)
 
 ---
