@@ -30,7 +30,7 @@ npm run preview
 
 ## GitHub Pages
 
-本書は GitHub Pages で公開されています：
+本書は GitHub Pages で公開されています。
 https://itdojp.github.io/computational-physicalism-book/
 
 ---
