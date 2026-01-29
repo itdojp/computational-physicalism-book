@@ -2,7 +2,7 @@
   "name": "computational-physicalism-book",
   "version": "1.0.0",
   "description": "Computational Physicalism: A Theory of Human-AI Intelligence Equivalence",
-  "author": "\u66f8\u7c4d\u8457\u8005",
+  "author": "書籍著者",
   "license": "CC-BY-NC-SA-4.0",
   "engines": {
     "node": ">=18.0.0"
