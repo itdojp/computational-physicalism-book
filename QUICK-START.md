@@ -151,7 +151,7 @@ npx http-server docs -p 3000
 ## 📚 さらに詳しく
 
 - **完全ガイド**: [README.md](README.md)
-- **リポジトリ構成**: [REPOSITORY-ACCESS-GUIDE.md](REPOSITORY-ACCESS-GUIDE.md)
+- **貢献ガイド**: [CONTRIBUTING.md](CONTRIBUTING.md)
 - **設定詳細**: [book-config.json](book-config.json)
 - **サポート**: [Issues](https://github.com/itdojp/book-publishing-template2/issues)
 
