@@ -32,7 +32,7 @@
 **主張**：任意の人間の知的活動は、有限の計算ステップで記述可能である。
 
 **証明**：
-```
+```text
 1. 人間の脳はニューロン数N（≈10^11）で構成される
 2. 各ニューロンの状態数をS、シナプス結合数をC（≈10^4）とする
 3. 脳の可能な状態数は高々 S^N × C^N（有限）
@@ -69,7 +69,7 @@ def pac_approximation(f, epsilon, delta):
 ```
 
 VC次元が有限の仮説クラスに対し、必要なサンプル数は次の通りです。
-```
+```text
 m = O((1/ε²)(d·log(1/ε) + log(1/δ)))
 ```
 ここで、dはVC次元です。
@@ -99,7 +99,7 @@ class UniversalApproximator:
 
 知的活動を探索問題として次のように定式化します。
 
-```
+```text
 Intelligence(P) = min{T(A) | A solves P}
 ```
 
@@ -135,7 +135,7 @@ class IntelligenceHierarchy:
 
 2つのシステムS₁、S₂が機能的に等価であるとは：
 
-```
+```text
 ∀x ∈ Input: |S₁(x) - S₂(x)| < ε
 ```
 
