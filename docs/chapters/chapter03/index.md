@@ -334,10 +334,8 @@ def anticipated_criticisms():
 
 ---
 
-**参考文献（第3回追加分）**
+**参考文献**
 
-- Tononi, G. (2008). Consciousness as integrated information
-- Baars, B. J. (1988). A cognitive theory of consciousness
-- Franklin, S., et al. (2016). LIDA: A systems-level architecture for cognition
-- Wei, J., et al. (2022). Emergent abilities of large language models
-- Kaplan, J., et al. (2020). Scaling laws for neural language models
+本書全体の参考文献は、付録Bに集約しています。
+
+- [付録B：参考文献一覧](/appendices/appendix02/)

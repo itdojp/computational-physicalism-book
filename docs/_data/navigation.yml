@@ -12,3 +12,11 @@ chapters:
   path: /chapters/chapter04/
 - title: 第5章：倫理的・社会的含意
   path: /chapters/chapter05/
+appendices:
+- title: 付録A：用語集
+  path: /appendices/appendix01/
+- title: 付録B：参考文献一覧
+  path: /appendices/appendix02/
+afterword:
+- title: あとがき
+  path: /afterword/
