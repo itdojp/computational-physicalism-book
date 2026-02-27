@@ -279,9 +279,8 @@ def functional_equivalence_suffices():
 
 ---
 
-**参考文献（第2回追加分）**
+**参考文献**
 
-- Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function
-- Hornik, K. (1991). Approximation capabilities of multilayer feedforward networks
-- Valiant, L. (1984). A theory of the learnable
-- Siegelmann, H. T. (1995). Computation beyond the Turing limit
+本書全体の参考文献は、付録Bに集約しています。
+
+- [付録B：参考文献一覧](/appendices/appendix02/)

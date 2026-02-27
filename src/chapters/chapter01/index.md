@@ -152,12 +152,9 @@ AIとの対話を通じて、以下の重要な洞察が得られました。
 
 **参考文献**
 
-- Turing, A. M. (1950). Computing Machinery and Intelligence
-- Churchland, P. M. (1988). Matter and Consciousness
-- Dennett, D. C. (1991). Consciousness Explained
-- Valiant, L. (1984). A Theory of the Learnable
-- 渡辺正峰 (2017). 脳の意識 機械の意識
-- 石黒浩 (2009). ロボットとは何か
+本書全体の参考文献は、付録Bに集約しています。
+
+- [付録B：参考文献一覧](/appendices/appendix02/)
 
 **著者について**
 
