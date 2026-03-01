@@ -17,9 +17,13 @@ title: "付録B：参考文献一覧"
 - Hornik, K. (1991). Approximation capabilities of multilayer feedforward networks.（関連：第2章）
 - Ishiguro, H. (2009). ロボットとは何か.（関連：第1章）
 - Kaplan, J., et al. (2020). Scaling laws for neural language models.（関連：第3章）
+- Hoffmann, J., et al. (2022). Training Compute-Optimal Large Language Models.（関連：第3章、Chinchilla）
+- OpenAI. (n.d.). Learning to reason with LLMs.（関連：第3章、アクセス日：2026-03-01）
+- Schaeffer, R., et al. (2023). Are Emergent Abilities of Large Language Models a Mirage?（関連：第3章）
 - Siegelmann, H. T. (1995). Computation beyond the Turing limit.（関連：第2章）
 - Tononi, G. (2008). Consciousness as integrated information.（関連：第3章）
 - Turing, A. M. (1950). Computing Machinery and Intelligence.（関連：第1章）
 - Valiant, L. (1984). A theory of the learnable.（関連：第1章・第2章）
 - Watanabe, M. (2017). 脳の意識 機械の意識.（関連：第1章）
 - Wei, J., et al. (2022). Emergent abilities of large language models.（関連：第3章）
+- Wu, Y., Sun, Z., Li, S., Welleck, S., Yang, Y. (2024). Inference Scaling Laws: An Empirical Analysis of Compute-Optimal Inference for Problem-Solving with Language Models.（関連：第3章）

@@ -20,10 +20,13 @@
 - [@hornik1991] Hornik, K. (1991). Approximation capabilities of multilayer feedforward networks.（関連：第2章）
 - [@ishiguro2009] Ishiguro, H. (2009). ロボットとは何か.（関連：第1章）
 - [@kaplan2020] Kaplan, J., et al. (2020). Scaling laws for neural language models.（関連：第3章）
+- [@hoffmann2022] Hoffmann, J., et al. (2022). Training Compute-Optimal Large Language Models.（関連：第3章、Chinchilla） https://arxiv.org/abs/2203.15556
+- [@openai_reasoning] OpenAI. (n.d.). Learning to reason with LLMs.（関連：第3章、アクセス日：2026-03-01） https://openai.com/index/learning-to-reason-with-llms/
+- [@schaeffer2023] Schaeffer, R., et al. (2023). Are Emergent Abilities of Large Language Models a Mirage?（関連：第3章） https://arxiv.org/abs/2304.15004
 - [@siegelmann1995] Siegelmann, H. T. (1995). Computation beyond the Turing limit.（関連：第2章）
 - [@tononi2008] Tononi, G. (2008). Consciousness as integrated information.（関連：第3章）
 - [@turing1950] Turing, A. M. (1950). Computing Machinery and Intelligence.（関連：第1章）
 - [@valiant1984] Valiant, L. (1984). A theory of the learnable.（関連：第1章・第2章）
 - [@watanabe2017] Watanabe, M. (2017). 脳の意識 機械の意識.（関連：第1章）
 - [@wei2022] Wei, J., et al. (2022). Emergent abilities of large language models.（関連：第3章）
-
+- [@wu2024] Wu, Y., Sun, Z., Li, S., Welleck, S., Yang, Y. (2024). Inference Scaling Laws: An Empirical Analysis of Compute-Optimal Inference for Problem-Solving with Language Models.（関連：第3章） https://arxiv.org/abs/2408.00724
