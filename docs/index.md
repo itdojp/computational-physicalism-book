@@ -48,7 +48,7 @@ permalink: /
 
 - [はじめに](introduction/)
 - [第1章：計算論的物理主義の基礎](chapters/chapter01/)
-- [第2章：計算可能性理論による厳密な証明](chapters/chapter02/)
+- [第2章：計算可能性理論による論証の枠組み](chapters/chapter02/)
 - [第3章：既存AI研究との比較分析](chapters/chapter03/)
 - [第4章：実装への道筋](chapters/chapter04/)
 - [第5章：倫理的・社会的含意](chapters/chapter05/)
