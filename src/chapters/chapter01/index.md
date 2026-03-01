@@ -155,6 +155,7 @@ AIとの対話を通じて、以下の重要な洞察が得られました。
 本書全体の参考文献は、付録Bに集約しています。
 
 - [付録B：参考文献一覧](/appendices/appendix02/)
+- [文献集約（編集用）](https://github.com/itdojp/computational-physicalism-book/blob/main/references/bibliography.md)
 
 **著者について**
 
