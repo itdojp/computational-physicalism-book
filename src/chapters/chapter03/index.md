@@ -232,7 +232,7 @@ def emergent_abilities_analysis():
     small_model = GPT(params=1e9)
     large_model = GPT(params=1e11)
     
-    # 突然の能力出現
+    # ベンチマーク上で段差に見える例
     arithmetic = {
         "small": 0.0,  # 全く解けない
         "large": 0.8   # 急に解ける
@@ -240,8 +240,8 @@ def emergent_abilities_analysis():
     
     # 本理論の説明
     return {
-        "explanation": "計算量が閾値を超えた",
-        "implication": "知性の相転移的性質"
+        "explanation": "指標の閾値・離散性により段差が見えることがある",
+        "implication": "解釈には評価指標と測定誤差の検討が必要"
     }
 ```
 
@@ -251,7 +251,7 @@ def emergent_abilities_analysis():
 
 ### 4.3 推論時（test-time）計算量スケーリング
 
-「知性＝計算量」を議論するとき、学習時（train-time）だけでなく、**推論時（test-time）に計算量を追加投入する**ことで品質が改善する場合がある、という流れが近年の主流論点です（例：OpenAI / Wu et al., 2024）。
+「知性＝計算量」を議論するとき、学習時（train-time）だけでなく、**推論時（test-time）に計算量を追加投入する**ことで品質が改善する場合がある、という流れが近年の主流論点です（例：OpenAI, n.d. / Wu et al., 2024）。
 
 推論時計算量は、単に「GPUを速くする」だけではなく、運用側の設計（推論戦略）によって増やせます。
 

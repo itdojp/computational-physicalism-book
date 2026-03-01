@@ -18,7 +18,7 @@ title: "付録B：参考文献一覧"
 - Ishiguro, H. (2009). ロボットとは何か.（関連：第1章）
 - Kaplan, J., et al. (2020). Scaling laws for neural language models.（関連：第3章）
 - Hoffmann, J., et al. (2022). Training Compute-Optimal Large Language Models.（関連：第3章、Chinchilla）
-- OpenAI. Learning to reason with LLMs.（関連：第3章）
+- OpenAI. (n.d.). Learning to reason with LLMs.（関連：第3章、アクセス日：2026-03-01）
 - Schaeffer, R., et al. (2023). Are Emergent Abilities of Large Language Models a Mirage?（関連：第3章）
 - Siegelmann, H. T. (1995). Computation beyond the Turing limit.（関連：第2章）
 - Tononi, G. (2008). Consciousness as integrated information.（関連：第3章）
