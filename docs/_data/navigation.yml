@@ -4,7 +4,7 @@ introduction:
 chapters:
 - title: 第1章：計算論的物理主義の基礎
   path: /chapters/chapter01/
-- title: 第2章：計算可能性理論による厳密な証明
+- title: 第2章：計算可能性理論による論証の枠組み
   path: /chapters/chapter02/
 - title: 第3章：既存AI研究との比較分析
   path: /chapters/chapter03/
