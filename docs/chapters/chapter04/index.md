@@ -14,13 +14,19 @@ title: "第4章：実装への道筋"
 - 知性を計算量で評価するための、実装可能な評価フレームワークとベンチマークの構成要素を整理できるようになる。
 - 「制約付き創造性」を、探索空間・評価関数・制約条件として実装に落とす観点を持てるようになる。
 - 階層的知性アーキテクチャや、人間との共進化を前提としたシステム設計の要点を概観できるようになる。
-- 実装ロードマップとオープンソース化の観点から、検証可能な取り組みへ落とす手順を把握できるようになる。
+- 最小実装＋評価ハーネス（動く実験）を通じて、推論時（test-time）計算量と品質の関係を手元で確認できるようになる。
+
+## 本章のコードについて（重要）
+
+本章のPythonコードは、原則として説明用の**擬似コード（pseudo）**です（そのまま実行しても動作することを保証しません）。  
+一方で、読者が「動く」ことを確認できるように、最小限の実験コードをリポジトリの `experiments/` に用意します。
 
 ## 1. 知性の計算量評価システム
 
 ### 1.1 実装可能な評価フレームワーク
 
 ```python
+# pseudo
 class IntelligenceEvaluator:
     def __init__(self):
         self.complexity_analyzer = ComplexityAnalyzer()
@@ -52,6 +58,7 @@ class IntelligenceEvaluator:
 ### 1.2 ベンチマークスイート
 
 ```python
+# pseudo
 class ComputationalPhysicalismBenchmark:
     def __init__(self):
         self.tasks = {
@@ -83,11 +90,33 @@ class ComputationalPhysicalismBenchmark:
         return results
 ```
 
+### 1.3 指標の選び方（`actual_steps` の限界と代替）
+
+上の擬似コードでは `actual_steps = len(solution_trace)` のように「ステップ数」で計算量を表現しました。しかし実務では、何を1ステップと数えるかが実装依存になり、恣意性が入りやすい問題があります。
+
+そこで本書では、推論時（test-time）計算量の**proxy（代替指標）**として、次のような指標を併記する方針を推奨します。
+
+- **推論トークン数**：生成したトークン数（入力/出力、再試行、自己検証を含む）
+- **探索分岐数**：サンプリング回数、ビーム幅、木探索の展開回数、ロールアウト回数
+- **外部ツール呼び出し回数**：検索/RAG、コード実行、DB問い合わせなどの回数
+- **wall-clock**：実時間（レイテンシ）とスループット
+- **推定電力/コスト**：GPU時間、消費電力推定、クラウド課金額
+
+重要なのは「1つの指標で知性を定義し切る」ことではなく、**品質（正解率/勝率/報酬）と、計算資源（proxy）を同時に測る**ことです。これにより「品質を上げるために、どの計算資源をどれだけ払ったのか」を再現可能に議論できます。
+
+### 1.4 最小実装＋評価ハーネス（動く実験）
+
+擬似コードだけでは検証できないため、リポジトリに `experiments/` を追加し、推論時（test-time）計算量の効果を手元で確認できる最小実験を用意します。
+
+- 例：三目並べ（Tic-Tac-Toe）で、**MCTSのシミュレーション回数（推論時計算量proxy）**を増やすと勝率が上がるかを測る
+- 実行手順：`experiments/run.md` を参照（ローカルで実行可能）
+
 ## 2. 制約付き創造性の実装
 
 ### 2.1 制約によるランダム性の導入
 
 ```python
+# pseudo
 class ConstrainedCreativity:
     def __init__(self, base_model, constraints):
         self.base_model = base_model
@@ -125,6 +154,7 @@ class ConstrainedCreativity:
 ### 2.2 評価関数の動的生成
 
 ```python
+# pseudo
 class DynamicEvaluationFunction:
     def __init__(self):
         self.meta_evaluator = MetaEvaluator()
@@ -166,6 +196,7 @@ class DynamicEvaluationFunction:
 ### 3.1 マルチレベル処理システム
 
 ```python
+# pseudo
 class HierarchicalIntelligence:
     def __init__(self):
         # レベル0：高速パターンマッチング
@@ -202,6 +233,7 @@ class HierarchicalIntelligence:
 ### 3.2 計算資源の動的配分
 
 ```python
+# pseudo
 class ComputeAllocator:
     def __init__(self, total_flops=1e15):
         self.total_flops = total_flops
@@ -234,6 +266,7 @@ class ComputeAllocator:
 ### 4.1 相互学習フレームワーク
 
 ```python
+# pseudo
 class HumanAICoevolution:
     def __init__(self):
         self.ai_model = AdaptiveAI()
@@ -269,6 +302,7 @@ class HumanAICoevolution:
 ### 4.2 価値アラインメント機構
 
 ```python
+# pseudo
 class ValueAlignment:
     def __init__(self):
         self.value_learner = InverseReinforcementLearning()
@@ -294,24 +328,27 @@ class ValueAlignment:
         )
 ```
 
-## 5. 実装ロードマップ
+## 5. 実装ロードマップ（例示）
+
+以下のロードマップは、議論の整理のための**例示**です。実際の年次計画は、組織の目的・制約・技術動向により変わります。
 
 ### 5.1 短期（1〜3年）：基盤技術の確立
 
 ```python
+# pseudo
 def short_term_milestones():
     return {
-        "2024": {
+        "t+0": {
             "task": "計算量評価フレームワークの実装",
             "deliverable": "知性レベル判定ツール",
             "validation": "既存AIシステムでの検証"
         },
-        "2025": {
+        "t+1": {
             "task": "制約付き創造性の実装",
             "deliverable": "創造的AIプロトタイプ",
             "validation": "芸術・科学分野での実証"
         },
-        "2026": {
+        "t+2": {
             "task": "階層的アーキテクチャの構築",
             "deliverable": "マルチレベル認知システム",
             "validation": "総合的ベンチマーク"
@@ -322,17 +359,18 @@ def short_term_milestones():
 ### 5.2 中期（3〜10年）：人間レベルへの接近
 
 ```python
+# pseudo
 def medium_term_goals():
     return {
         "compute_scaling": {
-            "2027": 1e20,  # FLOPS
-            "2030": 1e23,
-            "2033": 1e25   # 推定人間脳レベル
+            "t+5": 1e20,   # FLOPs（例）
+            "t+8": 1e23,
+            "t+10": 1e25   # 推定値（仮定依存）
         },
         "capabilities": {
-            "2028": "専門家レベルの問題解決",
-            "2031": "創造的タスクの自動化",
-            "2034": "新しい科学的発見"
+            "t+6": "専門家レベルの問題解決",
+            "t+9": "創造的タスクの自動化",
+            "t+12": "新しい科学的発見"
         }
     }
 ```
@@ -340,6 +378,7 @@ def medium_term_goals():
 ### 5.3 長期（10〜30年）：共進化の実現
 
 ```python
+# pseudo
 def long_term_vision():
     return {
         "human_ai_merger": {
@@ -360,6 +399,7 @@ def long_term_vision():
 ### 6.1 リファレンス実装
 
 ```python
+# pseudo
 # computational_physicalism/core.py
 class ComputationalPhysicalismCore:
     """
@@ -401,6 +441,7 @@ class ComputationalPhysicalismCore:
 ### 6.2 コミュニティプロジェクト
 
 ```yaml
+# pseudo
 # project_structure.yaml
 computational_physicalism/
   core/
@@ -437,13 +478,9 @@ computational_physicalism/
 
 ---
 
-**リポジトリ**：https://github.com/computational-physicalism/core
-
-**コミュニティ**：https://discord.gg/comp-physicalism
-
 **次のステップ**は次のとおりです。
-1. 理論の実装と検証
-2. ベンチマークの構築
-3. 実験結果の共有
+1. `experiments/` のベンチマークを動かし、推論時計算量（探索回数）が品質に与える影響を観察する
+2. 自分のタスクに合わせて、品質指標（正解率/報酬）と計算資源proxy（トークン/探索/時間/コスト）を定義し、ログに残す
+3. 第5章のガバナンスチェック項目に沿って、運用設計（監査・評価・インシデント対応）へ落とす
 
 計算論的物理主義の実現に向けて、共に歩みを進めましょう。
