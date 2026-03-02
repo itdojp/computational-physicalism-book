@@ -19,7 +19,7 @@ function parseArgs(argv) {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--games') args.games = Number(argv[++i]);
-    else if (a === '--sims') args.sims = String(argv[++i]).split(',').map((s) => Number(s.trim())).filter(Boolean);
+    else if (a === '--sims') args.sims = String(argv[++i]).split(',').map((s) => Number(s.trim()));
     else if (a === '--seed') args.seed = Number(argv[++i]);
     else if (a === '--mcts-player') args.mctsPlayer = String(argv[++i]).toUpperCase();
     else if (a === '--exploration') args.exploration = Number(argv[++i]);
@@ -28,6 +28,20 @@ function parseArgs(argv) {
   if (!Number.isFinite(args.games) || args.games <= 0) throw new Error('--games must be a positive number');
   if (!Array.isArray(args.sims) || args.sims.length === 0) throw new Error('--sims must be a number or comma-separated list');
   if (!['X', 'O'].includes(args.mctsPlayer)) throw new Error('--mcts-player must be X or O');
+  // Validate sims: each value must be a finite positive integer.
+  for (const s of args.sims) {
+    if (!Number.isFinite(s) || !Number.isInteger(s) || s <= 0) {
+      throw new Error('--sims values must be finite positive integers');
+    }
+  }
+  // Validate seed: must be a finite number (will be converted to uint32 internally).
+  if (!Number.isFinite(args.seed)) {
+    throw new Error('--seed must be a finite number');
+  }
+  // Validate exploration: must be finite and non-negative.
+  if (!Number.isFinite(args.exploration) || args.exploration < 0) {
+    throw new Error('--exploration must be a finite number >= 0');
+  }
 
   return args;
 }
@@ -85,6 +99,8 @@ class Node {
   constructor(board, playerToMove, parent = null, move = null) {
     this.board = board;
     this.playerToMove = playerToMove;
+    // Player who made the move that led to this node (null for root).
+    this.playerJustMoved = parent ? -playerToMove : null;
     this.parent = parent;
     this.move = move;
     this.children = [];
@@ -95,7 +111,7 @@ class Node {
 }
 
 function uctScore(parentVisits, child, exploration) {
-  // child.value is from root-player perspective: win=1, draw=0.5, loss=0
+  // child.value is from the perspective of child.playerJustMoved (the player choosing the move).
   const exploit = child.value / (child.visits || 1);
   const explore = Math.sqrt(Math.log(parentVisits + 1) / (child.visits + 1));
   return exploit + exploration * explore;
@@ -124,8 +140,8 @@ function rollout(board, playerToMove, rootPlayer, rng) {
     p = -p;
   }
   const w = checkWinner(b);
-  if (w === null) return 0.5; // draw
-  return w === rootPlayer ? 1.0 : 0.0;
+  if (w === null) return 0; // draw
+  return w === rootPlayer ? 1 : -1;
 }
 
 function mctsChooseMove(board, playerToMove, sims, rng, exploration) {
@@ -155,7 +171,10 @@ function mctsChooseMove(board, playerToMove, sims, rng, exploration) {
     // Backpropagation
     while (node) {
       node.visits += 1;
-      node.value += outcome;
+      if (node.playerJustMoved !== null) {
+        // Store value from the perspective of the player who chose the move into this node.
+        node.value += (node.playerJustMoved === rootPlayer) ? outcome : -outcome;
+      }
       node = node.parent;
     }
   }
@@ -178,15 +197,17 @@ function randomMove(board, rng) {
 }
 
 function playGame({ simsPerMove, seed, mctsIsX, exploration }) {
-  const rng = mulberry32(seed);
+  // Use separate RNG streams so opponent randomness is independent of MCTS compute.
+  const rngMcts = mulberry32(seed);
+  const rngOpponent = mulberry32((seed ^ 0x9e3779b9) >>> 0);
   let board = emptyBoard();
   let player = 1; // X=1, O=-1
 
   while (!isTerminal(board)) {
     const isMctsTurn = mctsIsX ? player === 1 : player === -1;
     const move = isMctsTurn
-      ? mctsChooseMove(board, player, simsPerMove, rng, exploration)
-      : randomMove(board, rng);
+      ? mctsChooseMove(board, player, simsPerMove, rngMcts, exploration)
+      : randomMove(board, rngOpponent);
     board = applyMove(board, move, player);
     player = -player;
   }
@@ -251,4 +272,3 @@ if (require.main === module) {
     process.exit(1);
   }
 }
-
