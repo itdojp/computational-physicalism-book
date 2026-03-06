@@ -1,5 +1,9 @@
 ---
 title: "はじめに"
+author: "株式会社アイティードゥ (ITDO Inc.)"
+license: "CC BY-NC-SA 4.0"
+commercial_license: "要契約"
+copyright: "© 2025 株式会社アイティードゥ (ITDO Inc.)"
 ---
 
 # はじめに
@@ -32,8 +36,6 @@ title: "はじめに"
 
 - プログラミングの基礎知識
 - 基本的な物理学の概念
-
-<!-- PRIVATE: 編集メモ - ここは公開版では削除される -->
 
 ---
 
