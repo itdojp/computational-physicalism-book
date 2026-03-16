@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
 
 env:
+  # Temporary opt-in during GitHub Actions' Node 20 -> Node 24 transition.
+  # Ref: https://github.blog/changelog/2026-03-06-github-actions-transitions-from-node-20-to-node-24/
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 permissions:
@@ -14,32 +16,32 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout
-      uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
       
-    - name: Setup Node.js
-      uses: actions/setup-node@v6
-      with:
-        node-version: '20'
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'npm'
         
-    - name: Install dependencies
-      run: |
-        npm ci
+      - name: Install dependencies
+        run: |
+          npm ci
         
-    - name: Build book
-      run: |
-        npm run build
+      - name: Build book
+        run: |
+          npm run build
         
-    - name: Commit and push if changed
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add docs/
-        if git diff --staged --quiet; then
-          echo "No changes to commit"
-        else
-          git commit -m "Auto-update docs from build"
-          git push
-        fi
+      - name: Commit and push if changed
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add docs/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update docs from build"
+            git push
+          fi
