@@ -6,14 +6,6 @@ commercial_license: "要契約"
 copyright: "© 2025 株式会社アイティードゥ (ITDO Inc.)"
 ---
 
-<!-- 
-本章は「計算論的物理主義」の一部であり、
-株式会社アイティードゥ (ITDO Inc.) が著作権を保有し、
-CC BY-NC-SA 4.0ライセンスの下で提供されます。
-商用利用は事前の契約が必要です。
-詳細：https://github.com/itdojp/it-engineer-knowledge-architecture/blob/main/LICENSE.md
--->
-
 # はじめに
 
 本書「計算論的物理主義」は、計算と物理世界の関係を探求する技術哲学書です。
@@ -50,7 +42,6 @@ CC BY-NC-SA 4.0ライセンスの下で提供されます。
 ## 次に読む章
 
 - まずは [第1章：計算論的物理主義の基礎](../chapters/chapter01/) に進んでください。
-
 ---
 
 次は [第1章：計算論的物理主義の基礎](../chapters/chapter01/) をお読みください。
