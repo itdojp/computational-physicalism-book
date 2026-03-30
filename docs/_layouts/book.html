@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="{{ '/assets/css/syntax-highlighting.css' | relative_url }}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ '/assets/favicon.ico' | relative_url }}">
-    <link rel="apple-touch-icon" href="{{ '/assets/apple-touch-icon.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ '/assets/images/book-publishing-template-repository-name.png' | relative_url }}">
+    <link rel="apple-touch-icon" sizes="48x48" href="{{ '/assets/images/book-publishing-template-repository-name.png' | relative_url }}">
 
     <!-- Open Graph -->
     <meta property="og:title" content="{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}">
@@ -35,9 +35,42 @@
     <script>
         // Detect system theme preference and apply immediately to prevent flash
         (function() {
-            const theme = localStorage.getItem('theme') ||
-                         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            document.documentElement.setAttribute('data-theme', theme);
+            var THEME_KEY = 'theme';
+            var LEGACY_THEME_KEY = 'book-theme';
+
+            function safeGetItem(key) {
+                try {
+                    return window.localStorage ? window.localStorage.getItem(key) : null;
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function safeSetItem(key, value) {
+                try {
+                    if (window.localStorage) {
+                        window.localStorage.setItem(key, value);
+                    }
+                } catch (e) {}
+            }
+
+            function normalizeTheme(value) {
+                return value === 'dark' || value === 'light' ? value : null;
+            }
+
+            var theme = normalizeTheme(safeGetItem(THEME_KEY));
+            if (!theme) {
+                var legacyTheme = normalizeTheme(safeGetItem(LEGACY_THEME_KEY));
+                if (legacyTheme) {
+                    theme = legacyTheme;
+                    safeSetItem(THEME_KEY, legacyTheme);
+                }
+            }
+            if (!theme && typeof window.matchMedia === 'function' &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                theme = 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', theme || 'light');
         })();
     </script>
 </head>
@@ -47,6 +80,13 @@
         {% unless repository_url contains '://' %}
             {% assign repository_url = 'https://github.com/' | append: repository_url %}
         {% endunless %}
+    {% endif %}
+    {% assign edit_path = page.path %}
+    {% if edit_path %}
+        {% assign edit_prefix = edit_path | slice: 0,5 %}
+        {% if edit_prefix != 'docs/' %}
+            {% assign edit_path = 'docs/' | append: edit_path %}
+        {% endif %}
     {% endif %}
 
     <div class="book-layout">
@@ -126,7 +166,7 @@
                 <!-- Edit on GitHub -->
                 {% if repository_url and page.path %}
                 <div class="edit-page">
-                    <a href="{{ repository_url }}/edit/main/{{ page.path }}"
+                    <a href="{{ repository_url }}/edit/main/{{ edit_path }}"
                        target="_blank"
                        rel="noopener"
                        class="edit-link">
@@ -150,6 +190,6 @@
     <script src="{{ '/assets/js/sidebar.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/code-copy.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/safe-main.js' | relative_url }}"></script>
 </body>
 </html>

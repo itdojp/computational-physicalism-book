@@ -619,7 +619,6 @@ img {
 
 /* Sidebar Overlay */
 .sidebar-overlay {
-    display: none;
     position: fixed;
     top: var(--header-height);
     left: 0;
@@ -627,10 +626,14 @@ img {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 899;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease-out, visibility 0.25s ease-out;
 }
 
-.sidebar-overlay.active {
-    display: block;
+.sidebar-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Mobile Responsive Fixes */
@@ -668,7 +671,7 @@ img {
         -webkit-overflow-scrolling: touch;
     }
 
-    .book-sidebar.open {
+    .book-sidebar.is-open {
         transform: translateX(0);
     }
 

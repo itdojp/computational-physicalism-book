@@ -56,8 +56,27 @@
     {% endfor %}
 {% endif %}
 
+<!-- Search through afterword -->
+{% if current_found == false and navigation.afterword %}
+    {% for item in navigation.afterword %}
+        {% if current_found == false and page.url contains item.path %}
+            {% assign current_found = true %}
+            {% if forloop.first and navigation.appendices.size > 0 %}
+                {% assign prev_item = navigation.appendices.last %}
+            {% elsif forloop.first and navigation.chapters.size > 0 %}
+                {% assign prev_item = navigation.chapters.last %}
+            {% endif %}
+        {% elsif current_found == false %}
+            {% assign prev_item = item %}
+        {% elsif current_found == true and next_item == nil %}
+            {% assign next_item = item %}
+            {% break %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
 <!-- Navigation Container -->
-<nav class="page-nav" aria-label="Page navigation">
+<div class="page-nav">
     <div class="page-nav-container">
         <!-- Previous Page -->
         <div class="page-nav-item page-nav-prev">
@@ -122,7 +141,7 @@
             {% endif %}
         </div>
     </div>
-</nav>
+</div>
 
 <style>
 /* Page Navigation Styles */
