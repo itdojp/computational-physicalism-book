@@ -1,8 +1,8 @@
 {
-  "name": "book-publishing-template-improved",
-  "version": "2.0.0",
-  "description": "Improved Book Publishing Template with Easy Setup",
-  "author": "Book Publishing Template Contributors",
+  "name": "computational-physicalism-book",
+  "version": "1.0.0",
+  "description": "計算可能性理論と物理的制約の観点から、人間とAIの知能の等価性を探求する哲学的・技術的論考",
+  "author": "太田和彦（株式会社アイティードゥ）",
   "license": "CC-BY-NC-SA-4.0",
   "engines": {
     "node": ">=20.0.0"
@@ -10,6 +10,7 @@
   "scripts": {
     "setup": "node easy-setup.js",
     "build": "node scripts/build-simple.js",
+    "check:metadata": "node scripts/check-metadata-consistency.js",
     "build:full": "node scripts/build.js",
     "preview": "npm run build && npx http-server docs -p 8080 --silent",
     "clean": "rm -rf docs output temp",
@@ -39,10 +40,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/itdojp/book-publishing-template.git"
+    "url": "git+https://github.com/itdojp/computational-physicalism-book.git"
   },
   "bugs": {
-    "url": "https://github.com/itdojp/book-publishing-template/issues"
+    "url": "https://github.com/itdojp/computational-physicalism-book/issues"
   },
-  "homepage": "https://github.com/itdojp/book-publishing-template#readme"
+  "homepage": "https://itdojp.github.io/computational-physicalism-book/"
 }
