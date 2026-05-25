@@ -38,6 +38,13 @@ npm run build
 npm run preview
 ```
 
+## ローカル品質チェック
+
+```bash
+# package / Jekyll / 公開ページ metadata の整合性を確認
+npm run check:metadata
+```
+
 ## GitHub Pages
 
 本書は GitHub Pages で公開されています。
