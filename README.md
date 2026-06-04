@@ -29,7 +29,7 @@
 
 ```bash
 # 依存関係のインストール
-npm install
+npm ci --omit=optional
 
 # 書籍のビルド
 npm run build
@@ -43,6 +43,9 @@ npm run preview
 ```bash
 # package / Jekyll / 公開ページ metadata の整合性を確認
 npm run check:metadata
+
+# Markdown lint と簡易ビルドを確認
+npm run test:light
 ```
 
 ## GitHub Pages
