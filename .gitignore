@@ -11,6 +11,8 @@ output/
 dist/
 build/
 temp/
+docs/_site/
+docs/Gemfile.lock
 *.tmp
 
 # Cache and metadata
