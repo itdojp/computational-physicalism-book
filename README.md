@@ -14,7 +14,7 @@
 - 「証明」「必然」「完全」「唯一」「実現済み」といった表現は、数学的定理、工学的検証、編集上の立場のどれを指すか明示する。
 - 意識、クオリア、自由意志、価値判断については、反対説や未解決論点を射程外として隠さず、読者が実証済み結論と誤読しないようにする。
 - AI規制、標準、モデル能力、電力制約など時点依存の話題は、確認日と出典を PR body に記録する。
-- GitHub Copilot review の本文、inline comment、suggestion を全件確認し、未解決 review thread が 0 件であることを完了条件にする。
+- `GitHub Copilot review` の本文、`inline comment`、`suggestion` を全件確認し、未解決 `review thread` が 0 件であることを完了条件にする。
 
 ## 内容
 
@@ -44,9 +44,15 @@ npm run preview
 # package / Jekyll / 公開ページ metadata の整合性を確認
 npm run check:metadata
 
+# optional 依存を除いた audit findings を確認
+npm run check:security
+
 # Markdown lint と簡易ビルドを確認
 npm run test:light
+
 ```
+
+注: CI の Node 20 互換を維持するため `markdownlint-cli` は 0.48 系のまま使い、audit findings は `gray-matter` / `markdownlint-cli` 配下に限定した `overrides` で解消しています。
 
 ## GitHub Pages
 

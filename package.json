@@ -18,7 +18,8 @@
     "configure:workflows": "node scripts/configure-workflows.js",
     "lint:light": "markdownlint 'src/**/*.md' --ignore node_modules",
     "test:light": "npm run lint:light && npm run build",
-    "help": "echo 'Available commands:\n  npm run setup - Interactive setup\n  npm run build - Build the book\n  npm run preview - Local preview\n  npm run configure:workflows - Disable problematic workflows\n  npm run deploy - Deploy to GitHub Pages'"
+    "help": "echo 'Available commands:\n  npm run setup - Interactive setup\n  npm run build - Build the book\n  npm run preview - Local preview\n  npm run configure:workflows - Disable problematic workflows\n  npm run deploy - Deploy to GitHub Pages'",
+    "check:security": "npm audit --omit=optional"
   },
   "dependencies": {
     "fs-extra": "^11.3.0",
@@ -47,5 +48,17 @@
   "bugs": {
     "url": "https://github.com/itdojp/computational-physicalism-book/issues"
   },
-  "homepage": "https://itdojp.github.io/computational-physicalism-book/"
+  "homepage": "https://itdojp.github.io/computational-physicalism-book/",
+  "overrides": {
+    "gray-matter": {
+      "js-yaml": "4.3.0"
+    },
+    "markdownlint-cli": {
+      "js-yaml": "4.3.0",
+      "markdown-it": {
+        ".": "14.2.0",
+        "linkify-it": "5.0.1"
+      }
+    }
+  }
 }
