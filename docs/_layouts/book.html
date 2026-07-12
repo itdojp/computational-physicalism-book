@@ -84,8 +84,12 @@
     {% assign edit_path = page.path %}
     {% if edit_path %}
         {% assign edit_prefix = edit_path | slice: 0,5 %}
-        {% if edit_prefix != 'docs/' %}
-            {% assign edit_path = 'docs/' | append: edit_path %}
+        {% if edit_prefix == 'docs/' %}
+            {% assign edit_path = edit_path | remove_first: 'docs/' %}
+        {% endif %}
+        {% assign source_prefix = edit_path | slice: 0,4 %}
+        {% if source_prefix != 'src/' %}
+            {% assign edit_path = 'src/' | append: edit_path %}
         {% endif %}
     {% endif %}
 

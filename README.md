@@ -28,12 +28,23 @@
 
 ## ビルド方法
 
+### 正本と生成物
+
+- `src/` は本文 Markdown の正本です。トップページも `src/index.md` を編集します。
+- `templates/` は Jekyll の layout/include と、生成対象の CSS/JavaScript の正本です。
+- `assets/` は画像、印刷用 CSS、EPUB 用 CSS など、そのまま公開する静的ファイルの正本です。
+- ルートの `_config.yml` は Jekyll 設定の正本です。ナビゲーションデータは `book-config.json` で有効な `src/` の見出しから生成します。
+- `docs/` は GitHub Pages 用のコミット対象生成物です。直接編集せず、正本を更新して `npm run build` で同期します。build は既存の `docs/` を入力として再利用しません。
+
 ```bash
 # 依存関係のインストール
 npm ci --omit=optional
 
 # 書籍のビルド
 npm run build
+
+# docsとの一致、未追跡ファイル非生成、2回のbuild hash一致を確認
+npm run check:build-determinism
 
 # ローカルプレビュー
 npm run preview

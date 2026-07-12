@@ -33,3 +33,4 @@ exclude:
   - README.md
   - "*.tmp"
   - Gemfile*
+permalink: pretty

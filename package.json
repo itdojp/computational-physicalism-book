@@ -10,6 +10,7 @@
   "scripts": {
     "setup": "node easy-setup.js",
     "build": "node scripts/build-simple.js",
+    "check:build-determinism": "node scripts/check-build-determinism.js",
     "check:metadata": "node scripts/check-metadata-consistency.js",
     "build:full": "node scripts/build.js",
     "preview": "npm run build && npx http-server docs -p 8080 --silent",

@@ -25,21 +25,27 @@ class ThemeManager {
 
     setupSystemThemeListener() {
         // Listen for system theme changes
-        if (window.matchMedia) {
+        if (typeof window.matchMedia === 'function') {
             const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            mediaQuery.addEventListener('change', (e) => {
+            const handler = (e) => {
                 // Only update if user hasn't manually set a preference
-                if (!localStorage.getItem('theme')) {
+                if (!this.getStoredTheme()) {
                     this.setTheme(e.matches ? 'dark' : 'light');
                 }
-            });
+            };
+            if (typeof mediaQuery.addEventListener === 'function') {
+                mediaQuery.addEventListener('change', handler);
+            } else if (typeof mediaQuery.addListener === 'function') {
+                mediaQuery.addListener(handler);
+            }
         }
     }
 
     applyInitialTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
+        const savedTheme = this.getStoredTheme();
+        const systemPrefersDark = typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches;
+
         let theme;
         if (savedTheme) {
             theme = savedTheme;
@@ -48,7 +54,7 @@ class ThemeManager {
         } else {
             theme = 'light';
         }
-        
+
         this.setTheme(theme);
     }
 
@@ -56,23 +62,23 @@ class ThemeManager {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         this.setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
+        this.safeSetItem('theme', newTheme);
     }
 
     setTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
         this.updateThemeToggleIcon(theme);
-        
+
         // Dispatch custom event for other components
-        window.dispatchEvent(new CustomEvent('themechange', { 
-            detail: { theme } 
+        window.dispatchEvent(new CustomEvent('themechange', {
+            detail: { theme }
         }));
     }
 
     updateThemeToggleIcon(theme) {
         const lightIcon = document.querySelector('.theme-icon-light');
         const darkIcon = document.querySelector('.theme-icon-dark');
-        
+
         if (lightIcon && darkIcon) {
             if (theme === 'light') {
                 lightIcon.style.display = 'block';
@@ -86,6 +92,41 @@ class ThemeManager {
 
     getCurrentTheme() {
         return document.documentElement.getAttribute('data-theme');
+    }
+
+    safeGetItem(key) {
+        try {
+            return window.localStorage ? window.localStorage.getItem(key) : null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    safeSetItem(key, value) {
+        try {
+            if (window.localStorage) {
+                window.localStorage.setItem(key, value);
+            }
+        } catch (e) {}
+    }
+
+    normalizeTheme(value) {
+        return value === 'dark' || value === 'light' ? value : null;
+    }
+
+    getStoredTheme() {
+        const currentTheme = this.normalizeTheme(this.safeGetItem('theme'));
+        if (currentTheme) {
+            return currentTheme;
+        }
+
+        const legacyTheme = this.normalizeTheme(this.safeGetItem('book-theme'));
+        if (legacyTheme) {
+            this.safeSetItem('theme', legacyTheme);
+            return legacyTheme;
+        }
+
+        return null;
     }
 }
 
