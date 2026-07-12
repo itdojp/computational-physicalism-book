@@ -107,14 +107,17 @@
     
     // Highlight search term in text
     function highlightText(text, query) {
-        const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
-        return text.replace(regex, '<mark>$1</mark>');
+        const escapedText = escapeHtml(text);
+        const escapedQuery = escapeHtml(query);
+        const regex = new RegExp(`(${escapeRegex(escapedQuery)})`, 'gi');
+        return escapedText.replace(regex, '<mark>$1</mark>');
     }
     
     // Show search results
     function showResults() {
         if (searchResults) {
             searchResults.classList.add('active');
+            searchResults.setAttribute('aria-hidden', 'false');
         }
     }
     
@@ -122,6 +125,7 @@
     function hideResults() {
         if (searchResults) {
             searchResults.classList.remove('active');
+            searchResults.setAttribute('aria-hidden', 'true');
         }
     }
     
@@ -163,6 +167,7 @@
         initElements();
         
         if (!searchInput || !searchResults) return;
+        searchResults.setAttribute('aria-hidden', 'true');
         
         // Build initial search index
         buildSearchIndex();
@@ -212,12 +217,12 @@
         .search-result-item {
             padding: 0.75rem 1rem;
             cursor: pointer;
-            border-bottom: 1px solid var(--border-color);
-            transition: var(--transition);
+            border-bottom: 1px solid var(--color-border);
+            transition: var(--transition-base);
         }
         
         .search-result-item:hover {
-            background: var(--bg-secondary);
+            background: var(--color-bg-secondary);
         }
         
         .search-result-item:last-child {
@@ -227,27 +232,27 @@
         .search-result-title {
             font-weight: 500;
             margin-bottom: 0.25rem;
-            color: var(--text-primary);
+            color: var(--color-text-primary);
         }
         
         .search-result-snippet {
             font-size: 0.875rem;
-            color: var(--text-secondary);
+            color: var(--color-text-secondary);
             line-height: 1.5;
         }
         
         .search-no-results {
             padding: 2rem;
             text-align: center;
-            color: var(--text-secondary);
+            color: var(--color-text-secondary);
         }
         
         .search-more {
             padding: 0.75rem 1rem;
             text-align: center;
             font-size: 0.875rem;
-            color: var(--text-secondary);
-            border-top: 1px solid var(--border-color);
+            color: var(--color-text-secondary);
+            border-top: 1px solid var(--color-border);
         }
         
         mark {

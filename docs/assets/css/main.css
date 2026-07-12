@@ -605,6 +605,10 @@ img {
     z-index: 1001;
 }
 
+.search-results.active {
+    display: block;
+}
+
 /* Sidebar Fix */
 .book-sidebar {
     position: fixed;
