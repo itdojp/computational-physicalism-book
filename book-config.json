@@ -189,7 +189,7 @@
       "checklistPack": false,
       "troubleshootingFlow": false,
       "conceptMap": true,
-      "figureIndex": true,
+      "figureIndex": false,
       "legalNotice": false,
       "glossary": true
     }
