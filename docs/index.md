@@ -51,8 +51,8 @@ permalink: /
 
 1. [第1章：計算論的物理主義の基礎](chapters/chapter01/)  
    本書が置く立場、比較対象、争点を整理します。
-2. [第2章：計算可能性理論による厳密な証明](chapters/chapter02/)  
-   第1章で置いた論点を、計算可能性・計算量・物理的制約の観点で厳密化します。
+2. [第2章：計算可能性理論に基づく理論的検討](chapters/chapter02/)
+   第1章で置いた論点を、計算可能性・計算量・物理的制約の観点から整理します。
 3. [第3章：既存AI研究との比較分析](chapters/chapter03/)  
    第1章と第2章で整理した前提を使い、既存AI研究や関連立場との違いを比較します。
 4. [第4章：実装への道筋](chapters/chapter04/)  
@@ -92,7 +92,7 @@ permalink: /
 
 - [はじめに](introduction/)
 - [第1章：計算論的物理主義の基礎](chapters/chapter01/)
-- [第2章：計算可能性理論による厳密な証明](chapters/chapter02/)
+- [第2章：計算可能性理論に基づく理論的検討](chapters/chapter02/)
 - [第3章：既存AI研究との比較分析](chapters/chapter03/)
 - [第4章：実装への道筋](chapters/chapter04/)
 - [第5章：倫理的・社会的含意](chapters/chapter05/)
