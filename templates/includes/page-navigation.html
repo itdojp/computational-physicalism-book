@@ -56,8 +56,27 @@
     {% endfor %}
 {% endif %}
 
+<!-- Search through afterword -->
+{% if current_found == false and navigation.afterword %}
+    {% for item in navigation.afterword %}
+        {% if current_found == false and page.url contains item.path %}
+            {% assign current_found = true %}
+            {% if forloop.first and navigation.appendices.size > 0 %}
+                {% assign prev_item = navigation.appendices.last %}
+            {% elsif forloop.first and navigation.chapters.size > 0 %}
+                {% assign prev_item = navigation.chapters.last %}
+            {% endif %}
+        {% elsif current_found == false %}
+            {% assign prev_item = item %}
+        {% elsif current_found == true and next_item == nil %}
+            {% assign next_item = item %}
+            {% break %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
 <!-- Navigation Container -->
-<nav class="page-nav" aria-label="Page navigation">
+<div class="page-nav">
     <div class="page-nav-container">
         <!-- Previous Page -->
         <div class="page-nav-item page-nav-prev">
@@ -122,7 +141,7 @@
             {% endif %}
         </div>
     </div>
-</nav>
+</div>
 
 <style>
 /* Page Navigation Styles */
@@ -265,34 +284,34 @@
         grid-template-columns: 1fr;
         gap: var(--space-3);
     }
-    
+
     .page-nav-toc {
         order: -1;
     }
-    
+
     .page-nav-next {
         text-align: left;
     }
-    
+
     .page-nav-next .page-nav-direction {
         justify-content: flex-start;
     }
-    
+
     .page-nav-next .page-nav-arrow {
         margin-left: 0;
         margin-right: var(--space-2);
         order: -1;
     }
-    
+
     .page-nav-link {
         min-height: 70px;
         padding: var(--space-3);
     }
-    
+
     .page-nav-home {
         min-height: 50px;
     }
-    
+
     .page-nav-title {
         font-size: var(--font-size-sm);
     }
@@ -303,28 +322,28 @@
         margin: var(--space-8) 0 var(--space-6);
         padding: var(--space-4) 0;
     }
-    
+
     .page-nav-container {
         gap: var(--space-2);
     }
-    
+
     .page-nav-link {
         padding: var(--space-3);
         min-height: 60px;
     }
-    
+
     .page-nav-home {
         min-height: 45px;
     }
-    
+
     .page-nav-direction {
         margin-bottom: var(--space-1);
     }
-    
+
     .page-nav-title {
         font-size: var(--font-size-sm);
     }
-    
+
     .page-nav-label {
         font-size: var(--font-size-xs);
     }
@@ -335,7 +354,7 @@
     .page-nav-link {
         border-width: 2px;
     }
-    
+
     .page-nav-link:hover:not(.page-nav-disabled) {
         border-width: 3px;
     }
@@ -346,7 +365,7 @@
     .page-nav-link {
         transition: none;
     }
-    
+
     .page-nav-link:hover:not(.page-nav-disabled) {
         transform: none;
     }

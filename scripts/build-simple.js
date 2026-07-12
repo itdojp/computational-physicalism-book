@@ -59,37 +59,11 @@ class SimpleBuild {
 
   async createPublicDirectory() {
     const publicDir = path.join(process.cwd(), 'docs');
-    const indexPath = path.join(publicDir, 'index.md');
-    let indexBackup = null;
-    
-    try {
-      await fs.access(publicDir);
-      
-      // Backup index.md if it exists and has substantial content
-      try {
-        const indexContent = await fs.readFile(indexPath, 'utf-8');
-        if (indexContent.length > 200) {
-          indexBackup = indexContent;
-          this.log('index.mdをバックアップしました');
-        }
-      } catch {
-        // index.md doesn't exist, continue
-      }
-      
-      // Clean existing directory
-      await fs.rm(publicDir, { recursive: true, force: true });
-    } catch {
-      // Directory doesn't exist, which is fine
-    }
-    
+
+    // docs/ is generated output. Never use a previous build as an input.
+    await fs.rm(publicDir, { recursive: true, force: true });
     await fs.mkdir(publicDir, { recursive: true });
-    
-    // Restore index.md if we had a backup
-    if (indexBackup) {
-      await fs.writeFile(indexPath, indexBackup, 'utf-8');
-      this.log('index.mdを復元しました');
-    }
-    
+
     this.log('公開ディレクトリを準備しました');
     return publicDir;
   }
@@ -243,36 +217,13 @@ title: "${title}"
     }
   }
 
-  async generateIndex(publicDir) {
+  async generateIndex(srcDir, publicDir) {
+    const sourcePath = path.join(srcDir, 'index.md');
     const indexPath = path.join(publicDir, 'index.md');
-    
-    // Check if index.md already exists with substantial content
-    try {
-      const existingContent = await fs.readFile(indexPath, 'utf-8');
-      if (existingContent.length > 200) {
-        this.log('既存のindex.mdを保持します');
-        return;
-      }
-    } catch {
-      // File doesn't exist, generate new one
-    }
-    
-    const indexContent = `# ${this.config.book?.title || 'Book Title'}
 
-${this.config.book?.description || 'Book description'}
-
-## 目次
-
-- [はじめに](introduction/)
-- [第1章](chapters/chapter01/)
-
----
-
-Built with Book Publishing Template
-`;
-
-    await fs.writeFile(indexPath, indexContent);
-    this.log('インデックスページを生成しました');
+    await this.processMarkdownFile(sourcePath, indexPath);
+    this.processedFiles++;
+    this.log('src/index.mdからインデックスページを生成しました');
   }
 
   async copyJekyllConfig(publicDir) {
@@ -535,7 +486,13 @@ ${navigationData.afterword.map(after => `  - title: "${after.title}"
     this.log('CSSファイルをコピーしました');
     
     // Copy JavaScript files
-    const jsFiles = ['theme.js', 'sidebar.js', 'code-copy.js'];
+    const jsFiles = [
+      'theme.js',
+      'sidebar.js',
+      'search.js',
+      'code-copy.js',
+      'code-copy-lightweight.js'
+    ];
     for (const jsFile of jsFiles) {
       try {
         const jsPath = path.join(templatesDir, 'js', jsFile);
@@ -562,7 +519,7 @@ ${navigationData.afterword.map(after => `  - title: "${after.title}"
     const includesDir = path.join(publicDir, '_includes');
     await fs.mkdir(includesDir, { recursive: true });
     
-    const includeFiles = ['sidebar-nav.html', 'breadcrumb.html', 'page-navigation.html'];
+    const includeFiles = ['sidebar-nav.html', 'page-navigation.html'];
     for (const includeFile of includeFiles) {
       try {
         const includePath = path.join(templatesDir, 'includes', includeFile);
@@ -665,7 +622,7 @@ ${navigationData.afterword.map(after => `  - title: "${after.title}"
       
       await this.processContentSections(srcDir, publicDir);
       await this.copyAssets(srcDir, publicDir);
-      await this.generateIndex(publicDir);
+      await this.generateIndex(srcDir, publicDir);
       await this.copyJekyllConfig(publicDir);
       
       // Deploy v3.0 Design System
