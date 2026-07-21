@@ -78,17 +78,16 @@ function sectionBounds(text, heading) {
   const start = text.indexOf(heading);
   if (start === -1) throw new Error(`section not found: ${heading}`);
   const level = heading.match(/^#+/)[0].length;
-  const lines = text.split(/\r?\n/);
-  const startLine = text.slice(0, start).split(/\r?\n/).length - 1;
-  let endLine = lines.length;
-  for (let index = startLine + 1; index < lines.length; index += 1) {
-    const match = lines[index].match(/^(#+) /);
-    if (match && match[1].length <= level) {
-      endLine = index;
+  const headings = /^(#+) /gm;
+  headings.lastIndex = start + heading.length;
+  let end = text.length;
+  let match;
+  while ((match = headings.exec(text)) !== null) {
+    if (match[1].length <= level) {
+      end = match.index;
       break;
     }
   }
-  const end = lines.slice(0, endLine).join('\n').length;
   return { start, end };
 }
 
@@ -305,6 +304,16 @@ const cases = [
     name: 'duplicate-field', expected: `${STAGES[0]}の対象層は1件必要です（2件）`,
     mutate(root) {
       replaceInSection(root, STAGES[0], '- **対象層**：', '- **対象層**：追加対象。\n- **対象層**：');
+    },
+  },
+  {
+    name: 'crlf-section-mutation', expected: `${STAGES[0]}の対象層は1件必要です（0件）`,
+    mutate(root) {
+      for (const file of pair(root)) {
+        const text = fs.readFileSync(file, 'utf8');
+        fs.writeFileSync(file, text.replace(/\r?\n/g, '\r\n'), 'utf8');
+      }
+      replaceInSection(root, STAGES[0], '- **対象層**：', '- **対象層メモ**：');
     },
   },
   {
