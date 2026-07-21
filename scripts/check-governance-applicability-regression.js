@@ -209,6 +209,14 @@ const cases = [
     mutate(root) { sectionReplace(root, NOTES, '再確認：改訂版、errata、Profile、Playbookが公開されたとき。https://', '再確認： https://'); },
   },
   {
+    name: 'source-recheck-whitespace-only', expected: '確認日または再確認条件が不足',
+    mutate(root) { sectionReplace(root, NOTES, '再確認：改訂版、errata、Profile、Playbookが公開されたとき。https://', '再確認：    。https://'); },
+  },
+  {
+    name: 'source-recheck-punctuation-only', expected: '確認日または再確認条件が不足',
+    mutate(root) { sectionReplace(root, NOTES, '再確認：改訂版、errata、Profile、Playbookが公開されたとき。https://', '再確認：----。https://'); },
+  },
+  {
     name: 'source-confirmed-date-invalid', expected: '確認日または再確認条件が不足',
     mutate(root) { sectionReplace(root, NOTES, '確認日：2026-07-21。再確認：改訂版', '確認日：2026/07/21。再確認：改訂版'); },
   },
