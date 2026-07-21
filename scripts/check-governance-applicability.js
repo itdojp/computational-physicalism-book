@@ -76,6 +76,15 @@ function requireTokens(scope, label, tokens, errors) {
   }
 }
 
+const DATE_PATTERN = String.raw`\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])`;
+
+function requireConfirmedDate(scope, label, errors) {
+  const confirmedDate = new RegExp(`^> \\*\\*確認日\\*\\*: ${DATE_PATTERN}$`, 'm');
+  if (!confirmedDate.test(scope)) {
+    errors.push(`${label}: 確認日はYYYY-MM-DD形式で記録してください`);
+  }
+}
+
 function validateFrameworkCard(text, heading, specificTokens, errors) {
   const scope = section(text, heading);
   if (!scope) return;
@@ -86,15 +95,16 @@ function validateFrameworkCard(text, heading, specificTokens, errors) {
     '**対象actor / system**',
     '**Intended use**',
     '**境界**',
-    '2026-07-21',
     ...specificTokens,
   ], errors);
+  requireConfirmedDate(scope, heading, errors);
 }
 
 function validateChecklist(text, heading, recordName, minimumItems, errors) {
   const scope = section(text, heading);
   if (!scope) return;
-  requireTokens(scope, heading, [recordName, '> **確認日**: 2026-07-21', '> **再確認条件**:'], errors);
+  requireTokens(scope, heading, [recordName, '> **再確認条件**:'], errors);
+  requireConfirmedDate(scope, heading, errors);
   const items = (scope.match(/^- \[ \] /gm) || []).length;
   if (items < minimumItems) {
     errors.push(`${heading}: checklist項目が不足しています: expected >= ${minimumItems}, got ${items}`);
@@ -181,8 +191,9 @@ function main() {
   requireTokens(notes, REQUIRED_SECTIONS[8], noteTokens, errors);
   const noteLines = notes.split(/\r?\n/).filter((line) => line.startsWith('- **'));
   if (noteLines.length !== 5) errors.push(`${REQUIRED_SECTIONS[8]}: Source Noteは5件必要です: got ${noteLines.length}`);
+  const inlineConfirmedDate = new RegExp(`確認日：${DATE_PATTERN}`);
   for (const line of noteLines) {
-    if (!line.includes('確認日：2026-07-21') || !line.includes('再確認：')) {
+    if (!inlineConfirmedDate.test(line) || !line.includes('再確認：')) {
       errors.push(`${REQUIRED_SECTIONS[8]}: 確認日または再確認条件が不足しています: ${line}`);
     }
   }

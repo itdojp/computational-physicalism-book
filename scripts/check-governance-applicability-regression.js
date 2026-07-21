@@ -68,6 +68,14 @@ function replacePair(root, oldText, newText) {
   for (const file of pair(root)) replaceOnce(file, oldText, newText);
 }
 
+function replaceAllPair(root, oldText, newText) {
+  for (const file of pair(root)) {
+    const text = fs.readFileSync(file, 'utf8');
+    if (!text.includes(oldText)) throw new Error(`${file}: expected at least one occurrence: ${oldText}`);
+    fs.writeFileSync(file, text.split(oldText).join(newText), 'utf8');
+  }
+}
+
 function sectionBounds(text, heading) {
   const start = text.indexOf(heading);
   if (start === -1) throw new Error(`section not found: ${heading}`);
@@ -133,7 +141,7 @@ const cases = [
     mutate(root) { sectionReplace(root, ISO, '**Intended use**', '**用途未分類**'); },
   },
   {
-    name: 'missing-eu-confirmed-date', expected: '2026-07-21',
+    name: 'missing-eu-confirmed-date', expected: '確認日はYYYY-MM-DD形式',
     mutate(root) { sectionReplace(root, EU, '> **確認日**: 2026-07-21', '> **確認日**: 未確認'); },
   },
   {
@@ -193,6 +201,10 @@ const cases = [
     mutate(root) { sectionReplace(root, NOTES, '再確認：改訂版、errata、Profile、Playbookが公開されたとき。', '更新状況は未記録。'); },
   },
   {
+    name: 'source-confirmed-date-invalid', expected: '確認日または再確認条件が不足',
+    mutate(root) { sectionReplace(root, NOTES, '確認日：2026-07-21。再確認：改訂版', '確認日：2026/07/21。再確認：改訂版'); },
+  },
+  {
     name: 'generated-docs-drift', expected: '生成された本文と一致しません',
     mutate(root) { fs.appendFileSync(path.join(root, docsRelative), '\n<!-- stale governance copy -->\n'); },
   },
@@ -234,6 +246,11 @@ try {
   const positive = runChecker(positiveRoot);
   if (positive.status !== 0) throw new Error(`positive fixture failed:\n${positive.output}`);
 
+  const updatedDateRoot = createFixture('positive-updated-date');
+  replaceAllPair(updatedDateRoot, '2026-07-21', '2026-07-22');
+  const updatedDate = runChecker(updatedDateRoot);
+  if (updatedDate.status !== 0) throw new Error(`updated-date positive fixture failed:\n${updatedDate.output}`);
+
   for (const testCase of cases) {
     const root = createFixture(testCase.name);
     testCase.mutate(root);
@@ -257,7 +274,7 @@ try {
     cliPassed += 1;
   }
 
-  console.log(`Governance applicability regression OK: ${negativePassed}/${cases.length} negative, 1/1 positive, ${cliPassed}/2 CLI misuse`);
+  console.log(`Governance applicability regression OK: ${negativePassed}/${cases.length} negative, 2/2 positive, ${cliPassed}/2 CLI misuse`);
 } finally {
   cleanup();
 }
