@@ -143,6 +143,13 @@ const cases = [
     },
   },
   {
+    name: 'normative-inflection-without-editorial-class',
+    expected: '規範claimには編集上の解釈または哲学的立場が必要',
+    mutate(root) {
+      replacePair(root, 'src/chapters/chapter04/index.md', '> **主張区分**: `思考実験・擬似コード` / `編集上の解釈`\n\n本章のPythonコード', '> **主張区分**: `実証済み事実`\n\n本章のPythonコード');
+    },
+  },
+  {
     name: 'unclassified-prediction',
     expected: '予測claimが無分類',
     mutate(root) {
