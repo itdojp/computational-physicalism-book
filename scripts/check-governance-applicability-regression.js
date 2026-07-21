@@ -205,6 +205,10 @@ const cases = [
     mutate(root) { sectionReplace(root, NOTES, '再確認：改訂版、errata、Profile、Playbookが公開されたとき。', '更新状況は未記録。'); },
   },
   {
+    name: 'source-recheck-empty', expected: '確認日または再確認条件が不足',
+    mutate(root) { sectionReplace(root, NOTES, '再確認：改訂版、errata、Profile、Playbookが公開されたとき。https://', '再確認： https://'); },
+  },
+  {
     name: 'source-confirmed-date-invalid', expected: '確認日または再確認条件が不足',
     mutate(root) { sectionReplace(root, NOTES, '確認日：2026-07-21。再確認：改訂版', '確認日：2026/07/21。再確認：改訂版'); },
   },

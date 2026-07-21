@@ -206,7 +206,7 @@ function main() {
   requireTokens(notes, REQUIRED_SECTIONS[8], noteTokens, errors);
   const noteLines = notes.split(/\r?\n/).filter((line) => line.startsWith('- **'));
   if (noteLines.length !== 5) errors.push(`${REQUIRED_SECTIONS[8]}: Source Noteは5件必要です: got ${noteLines.length}`);
-  const sourceNoteMetadata = new RegExp(`確認日：(${DATE_PATTERN})。再確認：`);
+  const sourceNoteMetadata = new RegExp(`確認日：(${DATE_PATTERN})。再確認：([^。\\r\\n]{4,})。\\s*https?://`);
   for (const line of noteLines) {
     const dateMatch = line.match(sourceNoteMetadata);
     if (!dateMatch) {
