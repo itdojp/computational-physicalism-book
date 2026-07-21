@@ -23,7 +23,7 @@ const STAGES = [
 const POSITION_HEADING = '#### 例示の位置づけ';
 const COMMON_HEADING = '#### 共通の適用条件とAI利用時の安全策';
 const PLURALISM_HEADING = '#### 哲学的多元性を守る授業契約';
-const FIELDS = ['対象層', '前提知識', '学習目的', '評価方法', '適用しない条件'];
+const FIELDS = ['対象層', '前提知識', '学習目的', '学習活動例', '評価方法', '適用しない条件'];
 
 function cleanup() {
   fs.rmSync(scratchRoot, { recursive: true, force: true });
