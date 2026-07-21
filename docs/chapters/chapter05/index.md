@@ -244,63 +244,129 @@ title: "第5章：倫理的・社会的含意"
 > **確認日**: 2026-07-21
 > **再確認条件**: 法令の適用日・対象・義務、NIST文書、ISO規格版、または公式ガイダンスが更新されたとき
 
-本章の前半では、価値観や制度設計の論点を扱いました。しかしエンジニアリングでは、それを**運用アーティファクト**（規程・評価表・ログ・監査・インシデント対応）に落とさなければ、現場で再現できません。
+EU AI Act、NIST AI RMF、ISO/IEC 42001は、同じ「AIガバナンス」領域で参照されますが、拘束力、適用判断、主な利用目的が異なります。最初から共通チェックリストへ統合せず、次の順序で扱います。
 
-ここでは代表的な枠組みとして **EU AI Act / NIST AI RMF / ISO/IEC 42001** を取り上げ、「何を整備すべきか」を最小限のチェック項目として整理します（例：EU, 2024; NIST, 2023; ISO/IEC, 2023）。  
-なお、本節は法的助言ではありません。適用可否や義務の詳細は、必ず公式情報と法務レビューで確認してください。
+1. **categoryを確定する**：法規制、任意risk management framework、management system standardを区別する
+2. **applicabilityを判断する**：地域、組織role、対象system、利用文脈、適用日を記録する
+3. **category別の成果物を作る**：法的適用性記録、risk profile、AIMS scopeを別々に承認する
+4. **最後にartifactをcrosswalkする**：同じ証跡を再利用しても、法令準拠、framework適用、認証を相互に推定しない
 
-### 5.5.1 EU AI Act（概要）
+本節は法的助言、適合性評価、認証判断を提供しません。法的義務は一次法令と資格を持つ専門家、認証の可否は認定された審査・認証の責任主体に確認してください。
 
-> **主張区分**: `実証済み事実` / `時点依存情報` / `編集上の解釈`
-> **確認日**: 2026-07-21
-> **再確認条件**: EU AI Act本文、適用日程、実施規則、ガイドライン、または対象ユースケースが変わったとき
-
-EU AI Act は、AIをリスクベースで分類し、特に高リスク用途に対して強い要求を課す枠組みです。実務上は次の観点で読むのが有効です（詳細は公式情報を参照）。
-
-- **用途・リスク分類**：どの機能がどのリスクに該当するか（高リスク用途か、一般用途か）
-- **説明責任**：モデル/データ/評価/運用の説明可能性（記録と監査可能性）
-- **透明性**：ユーザーへの通知、生成物の扱い、制限事項の明示
-- **サプライチェーン**：基盤モデルや外部サービスを含む責任分界
-
-### 5.5.2 NIST AI RMF（リスク管理の骨格）
+### 5.5.1 EU AI Act：拘束的な法規制
 
 > **主張区分**: `実証済み事実` / `時点依存情報` / `編集上の解釈`
 > **確認日**: 2026-07-21
-> **再確認条件**: NIST AI RMFの版、Core、Profile、Playbook、または公式更新状況が変わったとき
+> **再確認条件**: Regulation (EU) 2024/1689の改正、統合版、適用日、実施規則、guideline、または対象use caseが変わったとき
 
-NIST AI RMF は、法律ではなく任意利用のリスク管理フレームワークです。Coreは次の4機能を示します。これは先頭から順に完了させるチェックリストではなく、GOVERNが他の機能を横断し、各機能を継続的に扱う構造です。
+- **Category**：Regulation (EU) 2024/1689という拘束的なEU法
+- **Status / version**：2024年8月1日に発効し、Article 113に基づき段階適用中。2026年7月21日時点の基礎法本文は、一般適用日を2026年8月2日とし、2025年2月2日・2025年8月2日・2027年8月2日から適用する例外を置く
+- **Jurisdiction**：EU域内だけでなく、Article 2の域外適用を含むterritorial nexusを個別に確認する。EUとの接点がないsystemへ世界共通要件として適用しない
+- **対象actor / system**：provider、deployer、importer、distributor、product manufacturer、authorised representative、GPAI model providerなどのroleと、prohibited practice、transparency、high-risk、GPAIなどのsystem categoryを分ける
+- **Intended use**：該当条文、適用日、責任actor、必要証跡、判断ownerを記録した`Legal Applicability Record`を作る
+- **境界**：本章の要約や一般的なcontrol一覧だけで、適用対象・非対象または法令準拠を確定しない
 
-- **GOVERN**：責任・方針・監査・例外管理（誰が判断するか）
-- **MAP**：目的・想定利用・ステークホルダー・失敗モードの洗い出し
-- **MEASURE**：評価（品質/安全/公平性/堅牢性）とモニタリング
-- **MANAGE**：リスク低減策、変更管理、インシデント対応
+欧州委員会は、2026年5月7日にAI omnibusの政治合意へ達し、high-risk ruleの一部適用日を変更する方針を公表しています。政治合意やpolicy pageを施行済みの改正法と同一視してはいけません。判断時には、Official JournalとEUR-Lexの現行本文・統合版で改正の成立、発効、経過措置を再確認し、基礎法Article 113とpending changeを別欄で記録します。
 
-### 5.5.3 ISO/IEC 42001（AIマネジメントシステム）
+### 5.5.2 NIST AI RMF：任意risk management framework
 
 > **主張区分**: `実証済み事実` / `時点依存情報` / `編集上の解釈`
 > **確認日**: 2026-07-21
-> **再確認条件**: ISO/IEC 42001の版、追補、訂正票、または認証・適用に関する公式情報が変わったとき
+> **再確認条件**: NIST AI RMFの版、Core、Profile、Playbook、またはNISTが公表する改訂状況が変わったとき
 
-ISO/IEC 42001 は、AIマネジメントシステム（AIMS）の規格です。既存のISMS（例：ISO/IEC 27001）と同様に、**方針→実装→測定→改善**のサイクルで運用します。
+- **Category**：法律ではなく、任意利用のrisk management framework
+- **Status / version**：NIST AI 100-1、AI RMF 1.0（2023年1月26日公開）。NISTは2026年7月21日時点で1.0を改訂中と明示している
+- **Jurisdiction**：米国NISTの文書ですが、法的なterritorial scopeや域外適用を持つ法律ではない。組織は地域を問わず任意に参照できる
+- **対象actor / system**：AI systemをdesign、develop、deploy、operate、evaluate、acquire、useするlifecycle上のactorと、その影響を受けるstakeholder
+- **Intended use**：組織の目的、文脈、risk toleranceに合わせてCore outcomesやProfileを選び、`AI Risk Profile`とGOVERN / MAP / MEASURE / MANAGEの証跡を継続更新する
+- **境界**：Coreのactionは順序付きchecklistではなく、framework採用だけで法令準拠や第三者認証を証明しない
 
-### 5.5.4 運用チェックリスト（最小）
+### 5.5.3 ISO/IEC 42001：management system standard
+
+> **主張区分**: `実証済み事実` / `時点依存情報` / `編集上の解釈`
+> **確認日**: 2026-07-21
+> **再確認条件**: ISO/IEC 42001の版、追補、訂正票、systematic review、関連するaudit/certification規格、または契約要求が変わったとき
+
+- **Category**：組織のAI management system（AIMS）に対する国際management system standard
+- **Status / version**：ISO/IEC 42001:2023、Edition 1、2023年12月公開。ISO公式ページでは2026年7月21日時点でPublished、stage 60.60（International Standard published）
+- **Jurisdiction**：国際規格であり、それ自体に法令のterritorial scopeはない。採用・認証は原則として組織判断ですが、契約、調達条件、規制で参照される場合は別途その拘束根拠を記録する
+- **対象actor / system**：AI-based productやserviceをdevelop、provide、useする組織と、その組織が定めるAIMS scope
+- **Intended use**：AIMSをestablish、implement、maintain、continually improveし、`AIMS Scope and Readiness Record`へ方針、目的、process、risk/opportunity、評価、改善を記録する
+- **境界**：個別AI systemのcontrol一覧ではなく組織management systemを扱う。規格を参照しただけで、認証取得、個別法令準拠、個別systemの安全性が証明されるわけではない
+
+### 5.5.4 法的義務のapplicability checklist
 
 > **主張区分**: `時点依存情報` / `編集上の解釈`
 > **確認日**: 2026-07-21
-> **再確認条件**: 参照する法令・規格、組織の用途・リスク、または脅威モデルが変わったとき
+> **再確認条件**: 対象jurisdiction、組織role、system category、intended use、適用日、または一次法令が変わったとき
 
-以下は「まず何を整備すればよいか」を把握するための最小チェックリストです。
+`Legal Applicability Record`は、少なくとも次を別項目で記録します。
 
-- **目的と非目的**：想定利用/非想定利用、禁止事項、責任範囲を明文化したか
-- **データガバナンス**：データ出所、権利、PII/機微情報、保存期間、削除要求に対応できるか
-- **評価計画**：品質指標、失敗モード、閾値（合否基準）、回帰テストを定義したか
-- **レッドチーミング**：プロンプトインジェクション、脱獄、データ流出、過度な自信出力を検証したか
-- **監査ログ**：入力/出力、モデル版、プロンプト、外部ツール呼び出し、重要パラメータを追跡できるか
-- **変更管理**：モデル更新・プロンプト更新・ルール更新の承認/ロールバック手順があるか
-- **インシデント対応**：誤情報・漏えい・有害出力の検知、停止、通知、原因分析ができるか
-- **公平性/アクセシビリティ**：性能が偏る集団・状況を評価し、影響を説明できるか
+- [ ] **法源と版**：Official Journal / EUR-LexのURL、CELEX、確認日、統合版または改正法のstatus
+- [ ] **territorial nexus**：提供場所、設置場所、outputの利用場所、EU市場との接点
+- [ ] **actor role**：provider / deployer / importer / distributor等のどのroleで判断したか
+- [ ] **system category**：禁止、transparency、high-risk、GPAI等の分類根拠と非該当根拠
+- [ ] **適用日**：既に適用中、移行期間中、未到来の適用日、pending amendmentを分離したか
+- [ ] **義務と証跡**：該当条文、owner、期限、必要artifact、例外、残存論点
+- [ ] **承認**：法務・compliance owner、判断日、再確認triggerを記録したか
 
-これらは「認知的権利（プライバシー/透明性）」と「計算的公正（資源配分/差別の防止）」を、運用に落とすための実装ポイントでもあります。
+### 5.5.5 任意risk managementのtailoring checklist
+
+> **主張区分**: `時点依存情報` / `編集上の解釈`
+> **確認日**: 2026-07-21
+> **再確認条件**: NIST AI RMFの版、組織のrisk tolerance、system context、stakeholder、またはrisk profileが変わったとき
+
+`AI Risk Profile`は、法的義務とは別の承認flowで管理します。
+
+- [ ] **目的と文脈**：intended use、非目的、stakeholder、影響範囲をMAPしたか
+- [ ] **選択したoutcome**：採用するCore category/subcategoryと、採用しない項目の理由を記録したか
+- [ ] **測定**：品質、安全、公平性、privacy、security、resilience等の尺度・限界・データを定義したか
+- [ ] **risk response**：mitigate / transfer / avoid / acceptの判断、owner、期限、残存riskを記録したか
+- [ ] **governance**：risk tolerance、例外、go/no-go、監視、incident、廃止の責任を定義したか
+- [ ] **反復**：GOVERN / MAP / MEASURE / MANAGEを一度きりの順序付きchecklistにせず、変更時に再実行するか
+
+### 5.5.6 AIMSの採用・認証準備checklist
+
+> **主張区分**: `時点依存情報` / `編集上の解釈`
+> **確認日**: 2026-07-21
+> **再確認条件**: ISO/IEC 42001の版、AIMS scope、組織context、契約上の認証要求、または審査基準が変わったとき
+
+`AIMS Scope and Readiness Record`は、個別system checklistとは分けて管理します。
+
+- [ ] **scope**：対象組織、部門、process、AI product/service、除外とその正当化を定義したか
+- [ ] **contextと利害関係者**：外部・内部要求、法令・契約、期待、risk/opportunityを記録したか
+- [ ] **方針・目的・責任**：AI policy、測定可能な目的、leadership、role、資源、competenceを定義したか
+- [ ] **運用process**：AI inventory、impact/risk assessment、risk treatment、supplier、change、incidentを管理するか
+- [ ] **performance evaluation**：monitoring、measurement、internal audit、management reviewを計画したか
+- [ ] **improvement**：nonconformity、corrective action、継続的改善を追跡するか
+- [ ] **certification境界**：自己評価、導入、内部監査、第三者認証のstatusを混同していないか
+
+### 5.5.7 共通artifactへのcrosswalk
+
+> **主張区分**: `編集上の解釈`
+
+category別判断が終わった後で、重複作業を減らすために共通artifactを対応付けます。このcrosswalkから法令準拠、framework適用、認証を相互に推定しないことが前提です。
+
+| 共通artifact | EU AI Actでの利用例 | NIST AI RMFでの利用例 | ISO/IEC 42001での利用例 |
+| --- | --- | --- | --- |
+| AI inventory | system / model / actor分類の入力 | MAPのcontext把握 | AIMS scopeと運用管理 |
+| risk / impact record | 該当義務の証跡候補 | MAP・MEASURE・MANAGE | risk/opportunity process |
+| evaluation report | 条文・guidelineが要求する評価の証跡候補 | MEASURE outcome | performance evaluation |
+| incident / change log | 適用義務に応じた記録候補 | GOVERN・MANAGE | operation・improvement |
+
+同じartifactを再利用できても、1つの欄を埋めただけで他categoryの要求を満たしたとは判断しません。各categoryのownerが、目的、完全性、更新頻度、承認状態を別々に確認します。
+
+### 5.5.8 Source Notes：版・確認日・再確認条件
+
+> **主張区分**: `実証済み事実` / `時点依存情報` / `編集上の解釈`
+> **確認日**: 2026-07-21
+> **再確認条件**: 下記sourceの版、status、URL、適用日、または公式更新表示が変わったとき
+
+- **EU legal text**：Regulation (EU) 2024/1689 / CELEX 32024R1689 / Official Journal text。確認日：2026-07-21。再確認：EUR-Lexの統合版、Article 2、Article 113、amending act、delegated/implementing actが更新されたとき。https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng
+- **European Commission implementation page**：AI Act application timelineとAI omnibusの政治合意status。確認日：2026-07-21。再確認：政治合意が正式採択・公布・発効したとき、またはtimeline/guidelineが更新されたとき。https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
+- **NIST AI RMF publication**：NIST AI 100-1 / AI RMF 1.0、2023-01-26公開、voluntary。確認日：2026-07-21。再確認：改訂版、errata、Profile、Playbookが公開されたとき。https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10
+- **NIST AI RMF status / Core**：1.0は改訂中、Core actionは順序付きchecklistではない。確認日：2026-07-21。再確認：revision statusまたはCoreが更新されたとき。https://www.nist.gov/itl/ai-risk-management-framework / https://airc.nist.gov/airmf-resources/airmf/5-sec-core/
+- **ISO/IEC 42001**：ISO/IEC 42001:2023、Edition 1、2023-12、Published。確認日：2026-07-21。再確認：Edition、amendment、corrigendum、systematic review status、または関連certification文書が更新されたとき。https://www.iso.org/standard/42001
 
 ## 5.6 エネルギー・電力制約（物理制約）を運用に落とす
 

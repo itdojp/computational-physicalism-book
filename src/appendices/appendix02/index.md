@@ -40,14 +40,16 @@
 - Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function.（関連：第2章）
 - Dennett, D. C. (1991). Consciousness Explained.（関連：第1章）
 - European Union. (2024). Regulation (EU) 2024/1689 laying down harmonised rules on artificial intelligence（AI Act）.（関連：第5章、確認日：2026-07-21） https://eur-lex.europa.eu/eli/reg/2024/1689/oj
+- European Commission. (2026). AI Act implementation timeline and simplification status.（関連：第5章、確認日：2026-07-21。政治合意と施行済み法令を分離して参照） https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
 - Franklin, S., et al. (2016). LIDA: A systems-level architecture for cognition.（関連：第3章）
 - Hornik, K. (1991). Approximation capabilities of multilayer feedforward networks.（関連：第2章）
 - Ishiguro, H. (2009). ロボットとは何か.（関連：第1章）
 - International Energy Agency. (2025). Energy and AI.（関連：第1章・第5章） https://www.iea.org/reports/energy-and-ai
 - Kaplan, J., et al. (2020). Scaling laws for neural language models.（関連：第3章）
 - Hoffmann, J., et al. (2022). Training Compute-Optimal Large Language Models.（関連：第3章、Chinchilla）
-- ISO/IEC. (2023). ISO/IEC 42001 Artificial intelligence - Management system.（関連：第5章） https://www.iso.org/standard/42001
-- NIST. (2023). Artificial Intelligence Risk Management Framework (AI RMF 1.0).（関連：第5章） https://www.nist.gov/itl/ai-risk-management-framework
+- ISO/IEC. (2023). ISO/IEC 42001:2023 Artificial intelligence - Management system, Edition 1.（関連：第5章、確認日：2026-07-21） https://www.iso.org/standard/42001
+- NIST. (2023). Artificial Intelligence Risk Management Framework (AI RMF 1.0 / NIST AI 100-1).（関連：第5章、確認日：2026-07-21） https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10
+- NIST. (n.d.). AI Risk Management Framework resources and Core.（関連：第5章、確認日：2026-07-21。1.0は改訂中。Core actionは順序付きchecklistではない） https://www.nist.gov/itl/ai-risk-management-framework / https://airc.nist.gov/airmf-resources/airmf/5-sec-core/
 - OpenAI. (n.d.). Learning to reason with LLMs.（関連：第3章、アクセス日：2026-03-01）
 - Schaeffer, R., et al. (2023). Are Emergent Abilities of Large Language Models a Mirage?（関連：第3章）
 - Siegelmann, H. T. (1995). Computation beyond the Turing limit.（関連：第2章）

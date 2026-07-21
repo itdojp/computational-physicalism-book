@@ -118,7 +118,7 @@ const cases = [
     name: 'missing-recheck-condition',
     expected: '具体的な再確認条件が必要',
     mutate(root) {
-      replacePair(root, 'src/chapters/chapter05/index.md', '> **再確認条件**: EU AI Act本文、適用日程、実施規則、ガイドライン、または対象ユースケースが変わったとき\n', '');
+      replacePair(root, 'src/chapters/chapter05/index.md', '> **再確認条件**: Regulation (EU) 2024/1689の改正、統合版、適用日、実施規則、guideline、または対象use caseが変わったとき\n', '');
     },
   },
   {

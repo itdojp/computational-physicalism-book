@@ -39,7 +39,7 @@ jobs:
         run: npm ci --omit=optional
 
       - name: Run local metadata, security, editorial, and lint QA
-        run: npm run check:metadata && npm run check:security && npm run check:claims && npm run check:claims-regression && npm run lint:light
+        run: npm run check:metadata && npm run check:security && npm run check:claims && npm run check:claims-regression && npm run check:governance && npm run check:governance-regression && npm run lint:light
 
       - name: Verify deterministic committed docs build
         run: npm run check:build-determinism
