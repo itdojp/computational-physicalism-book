@@ -189,8 +189,42 @@ const cases = [
     mutate(root) { replacePair(root, NIST_LIST, '### 5.5.5 共通checklist'); },
   },
   {
-    name: 'source-url-missing', expected: 'https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng',
+    name: 'source-url-missing', expected: '確認日または再確認条件が不足',
     mutate(root) { sectionReplace(root, NOTES, 'https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng', 'URL未確認'); },
+  },
+  {
+    name: 'source-urls-swapped', expected: '**EU legal text**のURL fieldが期待値と一致しません',
+    mutate(root) {
+      const euUrl = 'https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng';
+      const nistUrl = 'https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10';
+      mutateSectionPair(root, NOTES, (scope) => scope
+        .replace(euUrl, '__EU_URL__')
+        .replace(nistUrl, euUrl)
+        .replace('__EU_URL__', nistUrl));
+    },
+  },
+  {
+    name: 'source-core-url-on-wrong-line', expected: '**NIST AI RMF status / Core**のURL fieldが期待値と一致しません',
+    mutate(root) {
+      const coreUrl = 'https://airc.nist.gov/airmf-resources/airmf/5-sec-core/';
+      const euUrl = 'https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng';
+      mutateSectionPair(root, NOTES, (scope) => scope
+        .replace(` / ${coreUrl}`, '')
+        .replace(euUrl, `${euUrl} / ${coreUrl}`));
+    },
+  },
+  {
+    name: 'source-urls-embedded-in-condition', expected: '**NIST AI RMF status / Core**のURL fieldが期待値と一致しません',
+    mutate(root) {
+      const statusUrl = 'https://www.nist.gov/itl/ai-risk-management-framework';
+      const coreUrl = 'https://airc.nist.gov/airmf-resources/airmf/5-sec-core/';
+      sectionReplace(
+        root,
+        NOTES,
+        `再確認：revision statusまたはCoreが更新されたとき。${statusUrl} / ${coreUrl}`,
+        `再確認：revision statusまたはCoreが更新されたとき ${statusUrl} ${coreUrl}。https://example.com`,
+      );
+    },
   },
   {
     name: 'appendix-source-url-missing', expected: 'https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10',

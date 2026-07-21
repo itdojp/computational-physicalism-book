@@ -19,6 +19,31 @@ const REQUIRED_SECTIONS = [
   '### 5.5.7 共通artifactへのcrosswalk',
   '### 5.5.8 Source Notes：版・確認日・再確認条件',
 ];
+const SOURCE_NOTE_CONTRACTS = [
+  {
+    label: '**EU legal text**',
+    urls: ['https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng'],
+  },
+  {
+    label: '**European Commission implementation page**',
+    urls: ['https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai'],
+  },
+  {
+    label: '**NIST AI RMF publication**',
+    urls: ['https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10'],
+  },
+  {
+    label: '**NIST AI RMF status / Core**',
+    urls: [
+      'https://www.nist.gov/itl/ai-risk-management-framework',
+      'https://airc.nist.gov/airmf-resources/airmf/5-sec-core/',
+    ],
+  },
+  {
+    label: '**ISO/IEC 42001**',
+    urls: ['https://www.iso.org/standard/42001'],
+  },
+];
 
 function usage(message) {
   if (message) console.error(message);
@@ -189,31 +214,35 @@ function main() {
   ], errors);
 
   const notes = section(source, REQUIRED_SECTIONS[8]);
-  const noteTokens = [
-    '**EU legal text**',
-    'CELEX 32024R1689',
-    'https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng',
-    '**European Commission implementation page**',
-    'https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai',
-    '**NIST AI RMF publication**',
-    'https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10',
-    '**NIST AI RMF status / Core**',
-    'https://www.nist.gov/itl/ai-risk-management-framework',
-    'https://airc.nist.gov/airmf-resources/airmf/5-sec-core/',
-    '**ISO/IEC 42001**',
-    'https://www.iso.org/standard/42001',
-  ];
-  requireTokens(notes, REQUIRED_SECTIONS[8], noteTokens, errors);
   const noteLines = notes.split(/\r?\n/).filter((line) => line.startsWith('- **'));
   if (noteLines.length !== 5) errors.push(`${REQUIRED_SECTIONS[8]}: Source Noteは5件必要です: got ${noteLines.length}`);
-  const sourceNoteMetadata = new RegExp(`確認日：(${DATE_PATTERN})。再確認：([^。\\r\\n]*)。\\s*(https?://\\S+)`, 'u');
-  for (const line of noteLines) {
-    const dateMatch = line.match(sourceNoteMetadata);
-    const recheckCondition = dateMatch ? dateMatch[2].trim() : '';
-    if (!dateMatch || recheckCondition.length < 4 || !/[\p{L}\p{N}]/u.test(recheckCondition)) {
+  const sourceNoteMetadata = new RegExp(
+    `^(.+)。確認日：(${DATE_PATTERN})。再確認：([^。\\r\\n]+)。((?:https?://\\S+)(?: / https?://\\S+)*)$`,
+    'u',
+  );
+  for (const contract of SOURCE_NOTE_CONTRACTS) {
+    const prefix = `- ${contract.label}：`;
+    const matches = noteLines.filter((line) => line.startsWith(prefix));
+    if (matches.length !== 1) {
+      errors.push(`${REQUIRED_SECTIONS[8]}: Source Noteはラベルごとに1件必要です: ${contract.label}, got ${matches.length}`);
+      continue;
+    }
+    const [line] = matches;
+    const metadata = line.slice(prefix.length).match(sourceNoteMetadata);
+    const recheckCondition = metadata ? metadata[3].trim() : '';
+    if (!metadata || recheckCondition.length < 4 || !/[\p{L}\p{N}]/u.test(recheckCondition)) {
       errors.push(`${REQUIRED_SECTIONS[8]}: 確認日または再確認条件が不足しています: ${line}`);
-    } else if (!isCalendarDate(dateMatch[1])) {
-      errors.push(`${REQUIRED_SECTIONS[8]}: 確認日は実在する暦日で記録してください: ${dateMatch[1]}`);
+      continue;
+    }
+    if (!isCalendarDate(metadata[2])) {
+      errors.push(`${REQUIRED_SECTIONS[8]}: 確認日は実在する暦日で記録してください: ${metadata[2]}`);
+    }
+    const actualUrls = metadata[4].split(' / ');
+    if (actualUrls.length !== contract.urls.length || actualUrls.some((url, index) => url !== contract.urls[index])) {
+      errors.push(
+        `${REQUIRED_SECTIONS[8]}: ${contract.label}のURL fieldが期待値と一致しません: `
+        + `expected ${contract.urls.join(' / ')}, got ${actualUrls.join(' / ')}`,
+      );
     }
   }
 
