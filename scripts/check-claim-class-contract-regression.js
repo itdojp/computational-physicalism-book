@@ -8,6 +8,9 @@ const { spawnSync } = require('child_process');
 const repositoryRoot = path.resolve(__dirname, '..');
 const checker = path.join(repositoryRoot, 'scripts', 'check-claim-class-contract.js');
 const scratchParent = path.join(repositoryRoot, '.codex-local', 'tmp');
+const codexLocalRoot = path.dirname(scratchParent);
+const scratchParentExisted = fs.existsSync(scratchParent);
+const codexLocalRootExisted = fs.existsSync(codexLocalRoot);
 const scratchRoot = path.join(scratchParent, `claim-class-regression-${process.pid}`);
 const fixtureFiles = [
   'src/appendices/appendix02/index.md',
@@ -22,7 +25,10 @@ const fixtureFiles = [
 
 function cleanup() {
   fs.rmSync(scratchRoot, { recursive: true, force: true });
-  for (const candidate of [scratchParent, path.dirname(scratchParent)]) {
+  const createdDirectories = [];
+  if (!scratchParentExisted) createdDirectories.push(scratchParent);
+  if (!codexLocalRootExisted) createdDirectories.push(codexLocalRoot);
+  for (const candidate of createdDirectories) {
     try {
       fs.rmdirSync(candidate);
     } catch (error) {
