@@ -209,6 +209,10 @@ const cases = [
     mutate(root) { sectionReplace(root, NOTES, '確認日：2026-07-21。再確認：改訂版', '確認日：2026/07/21。再確認：改訂版'); },
   },
   {
+    name: 'source-confirmed-date-trailing-garbage', expected: '確認日または再確認条件が不足',
+    mutate(root) { sectionReplace(root, NOTES, '確認日：2026-07-21。再確認：改訂版', '確認日：2026-07-21invalid。再確認：改訂版'); },
+  },
+  {
     name: 'source-confirmed-date-impossible', expected: '確認日は実在する暦日',
     mutate(root) { sectionReplace(root, NOTES, '確認日：2026-07-21。再確認：改訂版', '確認日：2026-04-31。再確認：改訂版'); },
   },

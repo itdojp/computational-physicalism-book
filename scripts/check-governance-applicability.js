@@ -206,10 +206,10 @@ function main() {
   requireTokens(notes, REQUIRED_SECTIONS[8], noteTokens, errors);
   const noteLines = notes.split(/\r?\n/).filter((line) => line.startsWith('- **'));
   if (noteLines.length !== 5) errors.push(`${REQUIRED_SECTIONS[8]}: Source Noteは5件必要です: got ${noteLines.length}`);
-  const inlineConfirmedDate = new RegExp(`確認日：(${DATE_PATTERN})`);
+  const sourceNoteMetadata = new RegExp(`確認日：(${DATE_PATTERN})。再確認：`);
   for (const line of noteLines) {
-    const dateMatch = line.match(inlineConfirmedDate);
-    if (!dateMatch || !line.includes('再確認：')) {
+    const dateMatch = line.match(sourceNoteMetadata);
+    if (!dateMatch) {
       errors.push(`${REQUIRED_SECTIONS[8]}: 確認日または再確認条件が不足しています: ${line}`);
     } else if (!isCalendarDate(dateMatch[1])) {
       errors.push(`${REQUIRED_SECTIONS[8]}: 確認日は実在する暦日で記録してください: ${dateMatch[1]}`);
