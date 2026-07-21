@@ -23,7 +23,7 @@ const REQUIRED_FIELDS = [
   '評価方法',
   '適用しない条件',
 ];
-const PLACEHOLDER_PATTERN = /(?:未定|後日(?:決め|検討)|今後(?:決め|検討)|検討中|未確認|未設定|未記入|詳細は(?:別途|省略)|TBD|TODO|特になし)/i;
+const PLACEHOLDER_PATTERN = /(?:未定|未策定|保留|決まっていない|定めていない|後日(?:決め|検討)|今後(?:決め|検討)|検討中|未確認|未設定|未記入|詳細は(?:別途|省略)|TBD|TODO|特になし)/i;
 const FIELD_SEMANTIC_PATTERNS = {
   対象層: [{ pattern: /学習者/, label: '対象となる学習者' }],
   前提知識: [{ pattern: /(?:基礎|理解|知識|規則|経験|教材)/, label: '具体的な前提または補完策' }],
@@ -31,6 +31,46 @@ const FIELD_SEMANTIC_PATTERNS = {
   評価方法: [{ pattern: /(?:説明|記録|作品|成果物|ルーブリック|口頭試問|試験|実演|評価|採否理由)/, label: '観測可能な評価手段' }],
   適用しない条件: [{ pattern: /(?:場合|とき|条件)/, label: '実施しない判断条件' }],
 };
+const FIELD_CONTRADICTION_PATTERNS = {
+  対象層: [
+    /学習者(?:や年齢)?を問わず/,
+    /すべての学習者.{0,20}一律/u,
+  ],
+  前提知識: [
+    /前提知識(?:は|が)?不要/,
+    /知識を問わない/,
+  ],
+  学習目的: [
+    /学習目的(?:の達成)?(?:は|を)?問わない/,
+    /到達目標(?:は|が)?不要/,
+  ],
+  評価方法: [
+    /(?:会話量|流暢さ).{0,30}(?:加点|成績|補助評価|能力評価)/u,
+    /AI出力.{0,30}そのまま.{0,20}(?:採点|評価)/u,
+    /(?:立場|理論)への同意.{0,30}(?:加点|成績|評価)/u,
+  ],
+  適用しない条件: [
+    /(?:条件を満たさない|確保できない).{0,30}(?:場合|とき)(?:でも|も).{0,30}(?:実施|利用|継続)(?:でき|する|可)/u,
+    /適用しない条件(?:は|が)?(?:ない|不要)/,
+    /どの条件でも.{0,20}実施/u,
+  ],
+};
+const POSITION_CONTRADICTIONS = [
+  /普遍的な推奨標準(?:として|であり|です|にする)/,
+  /教育政策案(?:として|であり|です|にする)/,
+  /固定年齢(?:帯)?(?:を|として).{0,20}(?:設定|適用|採用)/u,
+];
+const COMMON_CONTRADICTIONS = [
+  /(?:会話量|流暢さ).{0,30}(?:補助評価|参考値|加点対象|成績に反映|能力指標として扱)/u,
+  /(?:安全策|監督|検証|非AIの代替).{0,20}(?:なし|不要).{0,20}(?:実施|利用|継続)/u,
+  /確保できない場合でも.{0,20}(?:実施|利用|継続)/u,
+];
+const PLURALISM_CONTRADICTIONS = [
+  /(?:計算論的物理主義|物理主義|特定立場).{0,20}(?:への同意|を採用).{0,30}(?:加点|成績|評価対象)/u,
+  /名前を挙げるだけで十分/,
+  /立場ごとに異なる基準/,
+  /反対説.{0,20}(?:扱わない|省略する|不要)/u,
+];
 
 function failUsage(message) {
   if (message) console.error(message);
@@ -103,6 +143,13 @@ function requireTokens(scope, tokens, label, errors) {
   }
 }
 
+function rejectContradictions(scope, patterns, label, errors) {
+  for (const pattern of patterns) {
+    const match = scope.match(pattern);
+    if (match) errors.push(`${SOURCE}: ${label}の意味を逆転させる禁止表現があります: ${match[0]}`);
+  }
+}
+
 function validateStage(scope, heading, errors) {
   for (const field of REQUIRED_FIELDS) {
     const pattern = new RegExp(`^- \\*\\*${field}\\*\\*：(.*)$`, 'gm');
@@ -124,6 +171,12 @@ function validateStage(scope, heading, errors) {
         errors.push(`${SOURCE}: ${heading}の${field}に${requirement.label}が必要です`);
       }
     }
+    rejectContradictions(
+      value,
+      FIELD_CONTRADICTION_PATTERNS[field] || [],
+      `${heading}の${field}`,
+      errors,
+    );
   }
 }
 
@@ -150,6 +203,7 @@ function validateCurriculum(text, errors) {
     '固定年齢を表すものではなく',
     '仮ラベル',
   ], '例示と政策提案の境界', errors);
+  if (position) rejectContradictions(position, POSITION_CONTRADICTIONS, '例示と政策提案の境界', errors);
 
   const common = section(chapterSection, COMMON_HEADING, [PLURALISM_HEADING], errors);
   if (common) requireTokens(common, [
@@ -171,6 +225,7 @@ function validateCurriculum(text, errors) {
     '能力の代理指標にしません',
     '前提、手順、根拠、不確実性',
   ], 'AI利用時のsafeguard', errors);
+  if (common) rejectContradictions(common, COMMON_CONTRADICTIONS, 'AI利用時のsafeguard', errors);
 
   const pluralism = section(chapterSection, PLURALISM_HEADING, [STAGES[0]], errors);
   if (pluralism) {
@@ -188,6 +243,7 @@ function validateCurriculum(text, errors) {
       '[第3章6.2節の他理論からの批判](../chapter03/)',
       '[付録Aの機能主義・クオリア・ハードプロブレム](../../appendices/appendix01/)',
     ], '哲学的多元性の契約', errors);
+    rejectContradictions(pluralism, PLURALISM_CONTRADICTIONS, '哲学的多元性の契約', errors);
   }
 
   for (let index = 0; index < STAGES.length; index += 1) {

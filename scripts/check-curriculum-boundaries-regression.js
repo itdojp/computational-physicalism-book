@@ -165,6 +165,10 @@ const cases = [
     mutate(root) { replacePair(root, '固定年齢を表すものではなく', '共通の固定年齢を表し'); },
   },
   {
+    name: 'additive-fixed-age-downgrade', expected: '例示と政策提案の境界の意味を逆転させる禁止表現',
+    mutate(root) { replacePair(root, '実施地域の制度へ対応づけるための仮ラベルです。', '実施地域の制度へ対応づけるための仮ラベルです。初等段階には固定年齢帯を設定します。'); },
+  },
+  {
     name: 'missing-applicability-record', expected: '`Curriculum Applicability Record`',
     mutate(root) { replacePair(root, '`Curriculum Applicability Record`', '`Curriculum Memo`'); },
   },
@@ -223,6 +227,10 @@ const cases = [
     name: 'missing-proxy-assessment-boundary', expected: '能力の代理指標にしません',
     mutate(root) { replacePair(root, '能力の代理指標にしません', '能力の参考値として扱います'); },
   },
+  {
+    name: 'additive-proxy-assessment-downgrade', expected: 'AI利用時のsafeguardの意味を逆転させる禁止表現',
+    mutate(root) { replacePair(root, '学習者自身が前提、手順、根拠、不確実性を説明できることを評価します。', '学習者自身が前提、手順、根拠、不確実性を説明できることを評価します。会話量と流暢さは補助評価に使います。'); },
+  },
   ...STAGES.map((heading) => ({
     name: `missing-stage-${STAGES.indexOf(heading) + 1}`,
     expected: `見出しは1件必要です（0件）: ${heading}`,
@@ -264,6 +272,36 @@ const cases = [
     },
   },
   {
+    name: 'target-universalized-by-addition', expected: `${STAGES[0]}の対象層の意味を逆転させる禁止表現`,
+    mutate(root) {
+      mutateSectionPair(root, STAGES[0], (scope) => scope.replace(/^- \*\*対象層\*\*：.*$/m, (line) => `${line}。学習者や年齢を問わず一律に適用する`));
+    },
+  },
+  {
+    name: 'prerequisite-negated-by-addition', expected: `${STAGES[1]}の前提知識の意味を逆転させる禁止表現`,
+    mutate(root) {
+      mutateSectionPair(root, STAGES[1], (scope) => scope.replace(/^- \*\*前提知識\*\*：.*$/m, (line) => `${line}。前提知識は不要とする`));
+    },
+  },
+  {
+    name: 'objective-negated-by-addition', expected: `${STAGES[2]}の学習目的の意味を逆転させる禁止表現`,
+    mutate(root) {
+      mutateSectionPair(root, STAGES[2], (scope) => scope.replace(/^- \*\*学習目的\*\*：.*$/m, (line) => `${line}。学習目的の達成は問わない`));
+    },
+  },
+  {
+    name: 'assessment-reversed-by-addition', expected: `${STAGES[0]}の評価方法の意味を逆転させる禁止表現`,
+    mutate(root) {
+      mutateSectionPair(root, STAGES[0], (scope) => scope.replace(/^- \*\*評価方法\*\*：.*$/m, (line) => `${line}。AI出力をそのまま評価する`));
+    },
+  },
+  {
+    name: 'exclusion-reversed-by-addition', expected: `${STAGES[1]}の適用しない条件の意味を逆転させる禁止表現`,
+    mutate(root) {
+      mutateSectionPair(root, STAGES[1], (scope) => scope.replace(/^- \*\*適用しない条件\*\*：.*$/m, (line) => `${line}。条件を満たさない場合でも実施できる`));
+    },
+  },
+  {
     name: 'duplicate-field', expected: `${STAGES[0]}の対象層は1件必要です（2件）`,
     mutate(root) {
       replaceInSection(root, STAGES[0], '- **対象層**：', '- **対象層**：追加対象。\n- **対象層**：');
@@ -292,6 +330,10 @@ const cases = [
   {
     name: 'pluralism-no-common-rubric', expected: '同じルーブリックで扱い',
     mutate(root) { replacePair(root, '同じルーブリックで扱い', '立場ごとに異なる基準で扱い'); },
+  },
+  {
+    name: 'pluralism-belief-scored-by-addition', expected: '哲学的多元性の契約の意味を逆転させる禁止表現',
+    mutate(root) { replacePair(root, '学習者の信条そのものを評価しません。', '学習者の信条そのものを評価しません。計算論的物理主義への同意を加点対象にします。'); },
   },
   {
     name: 'belief-as-grade-boundary-missing', expected: '学習者の信条そのものを評価しません',
