@@ -145,6 +145,10 @@ const cases = [
     mutate(root) { sectionReplace(root, EU, '> **確認日**: 2026-07-21', '> **確認日**: 未確認'); },
   },
   {
+    name: 'impossible-eu-confirmed-date', expected: '確認日は実在する暦日',
+    mutate(root) { sectionReplace(root, EU, '> **確認日**: 2026-07-21', '> **確認日**: 2026-02-31'); },
+  },
+  {
     name: 'missing-article-113-status', expected: '一般適用日を2026年8月2日',
     mutate(root) { sectionReplace(root, EU, '一般適用日を2026年8月2日', '適用日は別途確認'); },
   },
@@ -205,6 +209,10 @@ const cases = [
     mutate(root) { sectionReplace(root, NOTES, '確認日：2026-07-21。再確認：改訂版', '確認日：2026/07/21。再確認：改訂版'); },
   },
   {
+    name: 'source-confirmed-date-impossible', expected: '確認日は実在する暦日',
+    mutate(root) { sectionReplace(root, NOTES, '確認日：2026-07-21。再確認：改訂版', '確認日：2026-04-31。再確認：改訂版'); },
+  },
+  {
     name: 'generated-docs-drift', expected: '生成された本文と一致しません',
     mutate(root) { fs.appendFileSync(path.join(root, docsRelative), '\n<!-- stale governance copy -->\n'); },
   },
@@ -251,6 +259,11 @@ try {
   const updatedDate = runChecker(updatedDateRoot);
   if (updatedDate.status !== 0) throw new Error(`updated-date positive fixture failed:\n${updatedDate.output}`);
 
+  const leapDateRoot = createFixture('positive-leap-date');
+  replaceAllPair(leapDateRoot, '2026-07-21', '2028-02-29');
+  const leapDate = runChecker(leapDateRoot);
+  if (leapDate.status !== 0) throw new Error(`leap-date positive fixture failed:\n${leapDate.output}`);
+
   for (const testCase of cases) {
     const root = createFixture(testCase.name);
     testCase.mutate(root);
@@ -274,7 +287,7 @@ try {
     cliPassed += 1;
   }
 
-  console.log(`Governance applicability regression OK: ${negativePassed}/${cases.length} negative, 2/2 positive, ${cliPassed}/2 CLI misuse`);
+  console.log(`Governance applicability regression OK: ${negativePassed}/${cases.length} negative, 3/3 positive, ${cliPassed}/2 CLI misuse`);
 } finally {
   cleanup();
 }

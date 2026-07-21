@@ -78,10 +78,25 @@ function requireTokens(scope, label, tokens, errors) {
 
 const DATE_PATTERN = String.raw`\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])`;
 
+function isCalendarDate(value) {
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (year === 0) return false;
+  const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const daysInMonth = [31, leapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return day <= daysInMonth[month - 1];
+}
+
 function requireConfirmedDate(scope, label, errors) {
-  const confirmedDate = new RegExp(`^> \\*\\*確認日\\*\\*: ${DATE_PATTERN}$`, 'm');
-  if (!confirmedDate.test(scope)) {
+  const confirmedDate = new RegExp(`^> \\*\\*確認日\\*\\*: (${DATE_PATTERN})$`, 'm');
+  const match = scope.match(confirmedDate);
+  if (!match) {
     errors.push(`${label}: 確認日はYYYY-MM-DD形式で記録してください`);
+  } else if (!isCalendarDate(match[1])) {
+    errors.push(`${label}: 確認日は実在する暦日で記録してください: ${match[1]}`);
   }
 }
 
@@ -191,10 +206,13 @@ function main() {
   requireTokens(notes, REQUIRED_SECTIONS[8], noteTokens, errors);
   const noteLines = notes.split(/\r?\n/).filter((line) => line.startsWith('- **'));
   if (noteLines.length !== 5) errors.push(`${REQUIRED_SECTIONS[8]}: Source Noteは5件必要です: got ${noteLines.length}`);
-  const inlineConfirmedDate = new RegExp(`確認日：${DATE_PATTERN}`);
+  const inlineConfirmedDate = new RegExp(`確認日：(${DATE_PATTERN})`);
   for (const line of noteLines) {
-    if (!inlineConfirmedDate.test(line) || !line.includes('再確認：')) {
+    const dateMatch = line.match(inlineConfirmedDate);
+    if (!dateMatch || !line.includes('再確認：')) {
       errors.push(`${REQUIRED_SECTIONS[8]}: 確認日または再確認条件が不足しています: ${line}`);
+    } else if (!isCalendarDate(dateMatch[1])) {
+      errors.push(`${REQUIRED_SECTIONS[8]}: 確認日は実在する暦日で記録してください: ${dateMatch[1]}`);
     }
   }
 
