@@ -121,7 +121,6 @@ class EasySetup {
       // Install only essential dependencies to avoid issues
       const essentialDeps = [
         'fs-extra',
-        'gray-matter',
         'glob',
         'markdownlint-cli'
       ];

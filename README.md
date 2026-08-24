@@ -64,7 +64,7 @@ npm run test:light
 
 ```
 
-注: CI の Node 20 互換を維持するため `markdownlint-cli` は 0.48 系のまま使い、audit findings は `gray-matter` / `markdownlint-cli` 配下に限定した `overrides` で解消しています。
+注: CI の Node 20 互換を維持するため `markdownlint-cli` は 0.48 系のまま使い、audit findings は同ツール配下に限定した `overrides` で解消しています。未使用だった `gray-matter` は、非互換な YAML parser override を避けるため依存関係と初期セットアップ対象から削除しています。
 
 ## GitHub Pages
 
