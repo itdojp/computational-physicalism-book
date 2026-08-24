@@ -19,8 +19,7 @@
     "help": "echo 'Available commands:\n  npm run setup - Interactive setup\n  npm run build - Build the book\n  npm run preview - Local preview'"
   },
   "dependencies": {
-    "fs-extra": "^11.1.0",
-    "gray-matter": "^4.0.3"
+    "fs-extra": "^11.1.0"
   },
   "devDependencies": {
     "http-server": "^14.1.1",
